@@ -1,19 +1,17 @@
-# docs/*
-examples/*
-excludes/*
+# --- Project Related ---
+# .docs/*
+.docs/details
+.docs/subject
+.examples/*
+.excludes/*
+.tests/*
+
 # src/*
-tests/*
 config.sh
 git.sh
 *.txt
 *.sh
 .vscode/*
-
-src/itfiles
-src/otfiles
-src/pipex
-src/pipex_bonus
-src/tests
 
 # Object files
 *.o

@@ -4,7 +4,7 @@
 ## Parsing
 ykonka
 
-## Execution
+## Execution and Process Management
 ileongar
 
 ### Task List::
@@ -12,7 +12,7 @@ ileongar
 * Pipe mechanism
 * Redirection
 * Basic shell commands implementation from scratch
-* &&, || and wildcard entries
+* &&, || and wildcard entries - bonus(excluded)
 
 // FYI - Info from ChatGPT:
 
