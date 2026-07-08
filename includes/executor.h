@@ -1,19 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   executor.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/07/08 12:29:23 by ykonka            #+#    #+#             */
-/*   Updated: 2026/07/08 12:34:36 by ykonka           ###   ########.fr       */
+/*   Created: 2026/07/07 17:29:48 by ykonka            #+#    #+#             */
+/*   Updated: 2026/07/08 13:03:28 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "stdio.h"
+//  Apply redirections, setup pipes and run builtins or external commands
 
-int main()
+#ifndef EXECUTOR_H
+# define EXECUTOR_H
+
+typedef struct s_redir  t_redir;
+
+// @Comment: Linkedlist
+typedef struct s_cmd
 {
-	printf("42\n");
-	return(0);
-}
+    char            **argv;
+    t_redir         *redirs;
+    int             pipe_in;
+    int             pipe_out;
+    struct s_cmd    *next;
+}   t_cmd;
+
+#endif
