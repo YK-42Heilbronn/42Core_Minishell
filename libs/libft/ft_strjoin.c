@@ -1,34 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer_utils.c                                      :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/07/08 13:16:29 by ykonka            #+#    #+#             */
-/*   Updated: 2026/07/08 19:23:50 by ykonka           ###   ########.fr       */
+/*   Created: 2025/03/22 09:21:21 by ykonka            #+#    #+#             */
+/*   Updated: 2026/02/09 13:32:10 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "lexer.h"
+#include "libft.h"
 
-void	append_new_token(t_token **tokens, t_token_type type, char *value)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	t_token	*new_tok;
+	char	*concat_str;
+	char	*temp;
 
-	new_tok = new_token(type, ft_strdup(value));
-	add_token(tokens, new_tok);
-}
-
-void	free_tokens(t_token *list)
-{
-	t_token	*next;
-
-	while (list)
+	if (s1 == NULL && s2 == NULL)
+		return (NULL);
+	concat_str = (char *)malloc(sizeof(char) * \
+	(ft_strlen(s1) + ft_strlen(s2) + 1));
+	if (concat_str == NULL)
+		return (NULL);
+	temp = concat_str;
+	while (*s1)
 	{
-		next = list->next;
-		free(list->value);
-		free(list);
-		list = next;
+		*temp++ = *s1++;
 	}
+	while (*s2)
+	{
+		*temp++ = *s2++;
+	}
+	*temp = '\0';
+	return (concat_str);
 }

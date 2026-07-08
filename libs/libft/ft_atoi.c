@@ -1,34 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer_utils.c                                      :+:      :+:    :+:   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/07/08 13:16:29 by ykonka            #+#    #+#             */
-/*   Updated: 2026/07/08 19:23:50 by ykonka           ###   ########.fr       */
+/*   Created: 2025/03/21 10:10:56 by ykonka            #+#    #+#             */
+/*   Updated: 2026/02/09 13:38:33 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "lexer.h"
+#include "libft.h"
 
-void	append_new_token(t_token **tokens, t_token_type type, char *value)
+int	ft_atoi(const char *str)
 {
-	t_token	*new_tok;
+	int		minus;
+	long	result;
 
-	new_tok = new_token(type, ft_strdup(value));
-	add_token(tokens, new_tok);
-}
-
-void	free_tokens(t_token *list)
-{
-	t_token	*next;
-
-	while (list)
+	minus = 1;
+	result = 0;
+	while (*str == ' ' || *str == '\t' || *str == '\n' || *str == '\r'
+		|| *str == '\v' || *str == '\f')
+		str++;
+	if (*str == 45 || *str == 43)
 	{
-		next = list->next;
-		free(list->value);
-		free(list);
-		list = next;
+		minus = 44 - *str;
+		str++;
 	}
+	while (*str)
+		if (*str >= 48 && *str <= 57)
+			result = (result * 10) + (*str++ - 48);
+	return (result * minus);
 }

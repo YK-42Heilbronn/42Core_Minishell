@@ -1,34 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer_utils.c                                      :+:      :+:    :+:   */
+/*   ft_lstadd_front.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/07/08 13:16:29 by ykonka            #+#    #+#             */
-/*   Updated: 2026/07/08 19:23:50 by ykonka           ###   ########.fr       */
+/*   Created: 2025/04/21 15:03:22 by ykonka            #+#    #+#             */
+/*   Updated: 2025/12/30 13:03:26 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "lexer.h"
+#include "libft.h"
 
-void	append_new_token(t_token **tokens, t_token_type type, char *value)
+void	ft_lstadd_front(t_list **lst, t_list *new)
 {
-	t_token	*new_tok;
-
-	new_tok = new_token(type, ft_strdup(value));
-	add_token(tokens, new_tok);
-}
-
-void	free_tokens(t_token *list)
-{
-	t_token	*next;
-
-	while (list)
+	if (new != NULL)
 	{
-		next = list->next;
-		free(list->value);
-		free(list);
-		list = next;
+		new->next = *lst;
+		*lst = new;
 	}
 }

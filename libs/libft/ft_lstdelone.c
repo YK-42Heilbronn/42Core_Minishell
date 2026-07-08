@@ -1,34 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer_utils.c                                      :+:      :+:    :+:   */
+/*   ft_lstdelone.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/07/08 13:16:29 by ykonka            #+#    #+#             */
-/*   Updated: 2026/07/08 19:23:50 by ykonka           ###   ########.fr       */
+/*   Created: 2025/04/27 15:10:41 by ykonka            #+#    #+#             */
+/*   Updated: 2026/01/03 15:08:29 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "lexer.h"
+#include "libft.h"
 
-void	append_new_token(t_token **tokens, t_token_type type, char *value)
+void	ft_lstdelone(t_list *lst, void (*del)(void *))
 {
-	t_token	*new_tok;
-
-	new_tok = new_token(type, ft_strdup(value));
-	add_token(tokens, new_tok);
-}
-
-void	free_tokens(t_token *list)
-{
-	t_token	*next;
-
-	while (list)
+	if (lst != NULL && del != NULL)
 	{
-		next = list->next;
-		free(list->value);
-		free(list);
-		list = next;
+		del(lst->content);
+		free(lst);
 	}
 }
