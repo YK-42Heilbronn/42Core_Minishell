@@ -14,7 +14,9 @@ INCLUDES    = -I$(INCDIR) -I$(LIBFT_DIR)
 SRCS        = src/lexer/lexer.c \
               src/lexer/token_create.c \
               src/lexer/lexer_utils.c \
-			  src/lexer/token_utils.c
+			  src/lexer/token_utils.c \
+			  src/main/init.c \
+			  src/main/main.c
 
 TEST_SRCS   = tests/main_lexer_tests.c
 

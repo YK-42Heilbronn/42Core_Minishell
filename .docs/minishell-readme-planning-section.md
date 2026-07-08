@@ -63,8 +63,8 @@ The schedule below is designed for **5 days**, with **9 to 10 hours of work per 
 - Implement basic quote checking for unclosed quotes.[file:16]
 
 **Person B**
-- Set up repository, folders, `Makefile`, include paths, and `libft` integration.[file:16]
-- Implement `main`, initialization, prompt display, and `readline` loop.
+- Set up repository, folders, `Makefile`, include paths, and `libft` integration.[file:16] (done)
+- Implement `main`(done), initialization (done), prompt display, and `readline` loop.
 - Copy `envp` into an internal environment structure.
 - Create a minimal executor for one simple external command.
 
