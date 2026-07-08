@@ -1,14 +1,3 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    lexer.txt                                          :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2026/07/07 17:14:47 by ykonka            #+#    #+#              #
-#    Updated: 2026/07/07 17:20:20 by ykonka           ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
 
 ### What it is?
 - In computer science, a lexer (or tokenizer) is a program that breaks raw input text into a sequence of meaningful chunks called tokens.
@@ -24,6 +13,10 @@ e.g:: bash$ echo hello > out.txt | wc -c
 4	TOK_PIPE		|
 5	TOK_WORD		wc
 6	TOK_WORD		-c
+7   TOK_REDIR_IN    <
+8	TOK_APPEND      >>
+9	TOK_HEREDOC     <<
+10	TOK_EOF         
 
 ### Step2:: Lexer will split and store the input tokens into following structure
 cmd1:
