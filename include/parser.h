@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ileongar <ileongar@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/07 17:01:03 by ykonka            #+#    #+#             */
-/*   Updated: 2026/07/08 16:02:04 by ykonka           ###   ########.fr       */
+/*   Updated: 2026/07/08 21:12:19 by ileongar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,13 @@ typedef struct s_shell
 {
     t_env   *env;
     int     last_status;
-    t_token *tokens;
+    char    *line; //stores the current realine
+    t_token *tokens; 
     t_cmd   *cmds;
+    int     stdin_fd; //useful if you temporarily redirect and need to restore descriptors
+    int     stdout_fd; //useful if you temporarily redirect and need to restore descriptors
+    int     heredoc_fd; //convenient if you implement heredoc as a temporary input source
+    int     exit_flag; //makes it easier to stop the loop from builtins or fatal errors
 }   t_shell;
 
 #endif
