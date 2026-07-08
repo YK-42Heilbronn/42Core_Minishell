@@ -5,7 +5,7 @@
 .examples/*
 .excludes/*
 .tests/*
-tests/*
+# tests/*
 
 # src/*
 config.sh
