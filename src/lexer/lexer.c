@@ -6,7 +6,7 @@
 /*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/08 13:14:04 by ykonka            #+#    #+#             */
-/*   Updated: 2026/07/08 19:23:41 by ykonka           ###   ########.fr       */
+/*   Updated: 2026/07/09 16:35:40 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,22 @@
 
 static int	handle_pipe(t_token **tokens, const char *line, int i)
 {
-	if (line[i] == '|')
-	{
-		append_new_token(tokens, TOK_PIPE, "|");
-		return (i + 1);
-	}
-	return (i);
+	(void)line;
+	if (!append_token_dup(tokens, TOK_PIPE, "|"))
+		return (-1);
+	return (i + 1);
 }
 
 static int	handle_redir(t_token **tokens, const char *line, int i)
 {
 	if (line[i] == '<' && line[i + 1] == '<')
-		return (append_new_token(tokens, TOK_HEREDOC, "<<"), i + 2);
+		return (append_token_dup(tokens, TOK_HEREDOC, "<<") ? i + 2 : -1);
 	if (line[i] == '>' && line[i + 1] == '>')
-		return (append_new_token(tokens, TOK_APPEND, ">>"), i + 2);
+		return (append_token_dup(tokens, TOK_APPEND, ">>") ? i + 2 : -1);
 	if (line[i] == '<')
-		return (append_new_token(tokens, TOK_REDIR_IN, "<"), i + 1);
+		return (append_token_dup(tokens, TOK_REDIR_IN, "<") ? i + 1 : -1);
 	if (line[i] == '>')
-		return (append_new_token(tokens, TOK_REDIR_OUT, ">"), i + 1);
+		return (append_token_dup(tokens, TOK_REDIR_OUT, ">") ? i + 1 : -1);
 	return (i);
 }
 
@@ -42,17 +40,9 @@ static int	handle_word(t_token **tokens, const char *line, int i)
 
 	len = word_len(line, i);
 	value = extract_word(line, i, len);
-	append_new_token(tokens, TOK_WORD, value);
+	if (!append_token_owned(tokens, TOK_WORD, value))
+		return (-1);
 	return (i + len);
-}
-
-static int	handle_token(t_token **tokens, const char *line, int i)
-{
-	if (line[i] == '|')
-		return (handle_pipe(tokens, line, i));
-	if (line[i] == '<' || line[i] == '>')
-		return (handle_redir(tokens, line, i));
-	return (handle_word(tokens, line, i));
 }
 
 t_token	*lex_input(const char *line, t_shell *shell)
@@ -71,7 +61,14 @@ t_token	*lex_input(const char *line, t_shell *shell)
 			i++;
 		if (!line[i])
 			break ;
-		i = handle_token(&tokens, line, i);
+		if (line[i] == '|')
+			i = handle_pipe(&tokens, line, i);
+		else if (line[i] == '<' || line[i] == '>')
+			i = handle_redir(&tokens, line, i);
+		else
+			i = handle_word(&tokens, line, i);
+		if (i == -1)
+			return (free_tokens(tokens), NULL);
 	}
 	return (tokens);
 }

@@ -6,7 +6,7 @@
 /*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/07 17:01:17 by ykonka            #+#    #+#             */
-/*   Updated: 2026/07/08 19:38:10 by ykonka           ###   ########.fr       */
+/*   Updated: 2026/07/09 16:33:13 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,9 @@ void					add_token(t_token **list, t_token *new_tok);
 
 // lexer_utils.c
 void					free_tokens(t_token *list);
-void					append_new_token(t_token **tokens, t_token_type type,
+int						append_token_dup(t_token **tokens, t_token_type type,
+							char *value);
+int						append_token_owned(t_token **tokens, t_token_type type,
 							char *value);
 
 // token_utils.c
