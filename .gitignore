@@ -6,6 +6,7 @@
 .excludes/*
 .tests/*
 # tests/*
+valgrind-out.txt
 
 # src/*
 config.sh
