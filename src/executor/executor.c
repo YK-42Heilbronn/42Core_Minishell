@@ -1,30 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   executor.h                                         :+:      :+:    :+:   */
+/*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ileongar <ileongar@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/07/07 17:29:48 by ykonka            #+#    #+#             */
-/*   Updated: 2026/07/11 00:01:49 by ileongar         ###   ########.fr       */
+/*   Created: 2026/07/10 23:45:06 by ileongar          #+#    #+#             */
+/*   Updated: 2026/07/10 23:45:06 by ileongar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//  Apply redirections, setup pipes and run builtins or external commands
-
-#ifndef EXECUTOR_H
-# define EXECUTOR_H
-
-typedef struct s_redir  t_redir;
-
-// @Comment: Linkedlist
-typedef struct s_cmd
-{
-    char            **argv;
-    t_redir         *redirs;
-    int             pipe_in;
-    int             pipe_out;
-    struct s_cmd    *next;
-}   t_cmd;
-
-#endif

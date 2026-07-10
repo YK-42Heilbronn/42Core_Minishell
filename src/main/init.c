@@ -6,7 +6,7 @@
 /*   By: ileongar <ileongar@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/08 21:17:27 by ileongar          #+#    #+#             */
-/*   Updated: 2026/07/10 23:22:48 by ileongar         ###   ########.fr       */
+/*   Updated: 2026/07/10 23:55:43 by ileongar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void lvl_up(t_shell *shell)
     int     level;
     char    *new_value;
 
-    node = find_env_key(shell->env, "SHLVL");
+    node = get_env_value(shell->env, "SHLVL");
     if (!node)
     {
         node = new_env_node("SHLVL = 1");

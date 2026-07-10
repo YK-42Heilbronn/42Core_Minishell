@@ -6,7 +6,7 @@
 /*   By: ileongar <ileongar@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/10 19:40:37 by ileongar          #+#    #+#             */
-/*   Updated: 2026/07/10 20:04:23 by ileongar         ###   ########.fr       */
+/*   Updated: 2026/07/10 23:57:06 by ileongar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,15 +68,4 @@ void add_env_back(t_env **env, t_env *new_node)
     while (current->next)
         current = current->next;
     current->next = new_node;
-}
-
-t_env    *find_env_key(t_env env, char *key)
-{
-    while (env)
-    {
-        if (ft_strcmp(env->key, key) == 0)
-            return (env);
-        env = env->next;   
-    }
-    return(NULL);
 }
