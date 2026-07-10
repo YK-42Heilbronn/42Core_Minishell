@@ -6,7 +6,7 @@
 /*   By: ileongar <ileongar@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/08 21:17:27 by ileongar          #+#    #+#             */
-/*   Updated: 2026/07/10 20:04:29 by ileongar         ###   ########.fr       */
+/*   Updated: 2026/07/10 23:22:48 by ileongar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,13 @@ void    init_shell(t_shell *shell, char **envp)
     shell->line = NULL;
     shell->tokens = NULL;
     shell->cmds = NULL;
-    shell->env = init_env(envp);
+    shell->env = dup_env(envp);
     if(!shell->env)
         exit(1);
     lvl_up(shell);
 }
 
-t_env   *init_env(char **envp)
+t_env   *dup_env(char **envp)
 {
     t_env   *env;
     t_env   *node;

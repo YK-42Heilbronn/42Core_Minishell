@@ -64,8 +64,8 @@ The schedule below is designed for **5 days**, with **9 to 10 hours of work per 
 
 **Person B**
 - Set up repository, folders, `Makefile`, include paths, and `libft` integration.[file:16] (done)
-- Implement `main`(done), initialization (done), prompt display, and `readline` loop.
-- Copy `envp` into an internal environment structure.
+- Implement `main`(done), initialization (done), prompt display (done), and `readline` loop (done)
+- Copy `envp` into an internal environment structure (done)
 - Create a minimal executor for one simple external command.
 
 **Shared checkpoint**
@@ -131,9 +131,9 @@ The schedule below is designed for **5 days**, with **9 to 10 hours of work per 
 - Implement `<`, `>`, `>>`, and `<<` using the allowed system calls.[file:16]
 - Implement pipelines with `pipe`, `fork`, `dup2`, and process synchronization.[file:16]
 - Implement interactive signal behavior:
-  - `Ctrl-C` prints a new prompt on a new line.[file:16]
-  - `Ctrl-D` exits the shell.[file:16]
-  - `Ctrl-\` does nothing in interactive mode.[file:16]
+  - `Ctrl-C` prints a new prompt on a new line.[file:16] (done)
+  - `Ctrl-D` exits the shell.[file:16] (done)
+  - `Ctrl-\` does nothing in interactive mode.[file:16] (done)
 - Separate parent and child signal behavior.
 
 **Shared checkpoint**

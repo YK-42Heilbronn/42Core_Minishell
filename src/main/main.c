@@ -6,7 +6,7 @@
 /*   By: ileongar <ileongar@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/08 21:00:22 by ileongar          #+#    #+#             */
-/*   Updated: 2026/07/10 21:07:49 by ileongar         ###   ########.fr       */
+/*   Updated: 2026/07/10 23:23:23 by ileongar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,18 @@
 int main(int argc, char **argv, char **envp)
 {
     t_shell shell;
-    
+
     (void)argc;
     (void)argv;
     init_shell(&shell, envp);
     setup_signals();
+    shell_loop(&shell);
+    cleanup_shell(&shell);
+    return(shell->last_status);
+}
 
+static int shell_loop(t_shell *shell)
+{
     while(1)
     {
         shell->line = readline("minishell$ ");
@@ -34,11 +40,12 @@ int main(int argc, char **argv, char **envp)
         if(process_line(&shell) == -1)
         {
             free(shell->line);
+            shell->line = NULL;
             continue;
         }
         free(shell->line);
-        cleanup_command(&shell);
+        shell->line = NULL;
+        cleanup_command(shell);
     }
-    cleanup_shell(&shell);
-    return(shell->exit_status);
+    return(0);
 }

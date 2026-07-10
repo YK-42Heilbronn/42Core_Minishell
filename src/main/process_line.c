@@ -6,7 +6,11 @@
 /*   By: ileongar <ileongar@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/08 21:17:23 by ileongar          #+#    #+#             */
-/*   Updated: 2026/07/08 21:17:24 by ileongar         ###   ########.fr       */
+/*   Updated: 2026/07/10 23:23:29 by ileongar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "minishell.h"
+
+
 
