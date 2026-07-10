@@ -6,7 +6,7 @@
 /*   By: ileongar <ileongar@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/08 21:00:22 by ileongar          #+#    #+#             */
-/*   Updated: 2026/07/09 00:03:10 by ileongar         ###   ########.fr       */
+/*   Updated: 2026/07/10 21:07:49 by ileongar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,10 @@ int main(int argc, char **argv, char **envp)
     {
         shell->line = readline("minishell$ ");
         if (!shell->line)
-            break;
+        {
+            write(1, "exit\n", 5);
+            break ;
+        }
         if (shell->line[0] != '\0')
             add_history(shell->line);
         if(process_line(&shell) == -1)

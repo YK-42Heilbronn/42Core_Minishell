@@ -131,9 +131,9 @@ The schedule below is designed for **5 days**, with **9 to 10 hours of work per 
 - Implement `<`, `>`, `>>`, and `<<` using the allowed system calls.[file:16]
 - Implement pipelines with `pipe`, `fork`, `dup2`, and process synchronization.[file:16]
 - Implement interactive signal behavior:
-  - `ctrl-C` prints a new prompt on a new line.[file:16]
-  - `ctrl-D` exits the shell.[file:16]
-  - `ctrl-\` does nothing in interactive mode.[file:16]
+  - `Ctrl-C` prints a new prompt on a new line.[file:16]
+  - `Ctrl-D` exits the shell.[file:16]
+  - `Ctrl-\` does nothing in interactive mode.[file:16]
 - Separate parent and child signal behavior.
 
 **Shared checkpoint**

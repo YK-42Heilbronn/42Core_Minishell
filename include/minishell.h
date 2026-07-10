@@ -6,7 +6,7 @@
 /*   By: ileongar <ileongar@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 16:22:02 by ykonka            #+#    #+#             */
-/*   Updated: 2026/07/10 20:04:08 by ileongar         ###   ########.fr       */
+/*   Updated: 2026/07/10 21:47:43 by ileongar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,11 @@
 #include <stdlib.h>
 #include <string.h>
 #include "libft.h"
+#include "signal.h"
+
+/* readline & history */
+#include <readline/readline.h>
+#include <readline/history.h>
 
 /* main */
 int     main(int argc, char **argv, char **envp);
@@ -30,5 +35,10 @@ void    free_env_list(t_env *env);
 t_env   *new_env_node(const char *line);
 void    add_env_back(t_env **env, t_env *new_node);
 t_env   *find_env_key(t_env env, char *key);
+
+/* signals */
+void    sigint_handler(int sig);
+void    set_sigint(void);
+void    setup_signals(void);
 
 #endif
