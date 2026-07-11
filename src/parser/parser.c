@@ -6,12 +6,9 @@
 /*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/09 14:51:18 by ykonka            #+#    #+#             */
-/*   Updated: 2026/07/10 14:12:58 by ykonka           ###   ########.fr       */
+/*   Updated: 2026/07/11 12:55:53 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include "minishell.h"
-#include "parser.h"
 
 #include "parser.h"
 #include "lexer.h"
@@ -47,6 +44,7 @@ t_cmd	*parse_pipeline(t_token **tokens, t_shell *shell)
 	return (cmd);
 }
 
+// cur is modified in the parse_pipeline
 t_cmd	*parse_tokens(t_token *tokens, t_shell *shell)
 {
 	t_token	*cur;

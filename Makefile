@@ -2,6 +2,7 @@ NAME                = minishell
 TEST_NAME_LEXER     = lexer_tests
 TEST_NAME_PARSER_ST1= parser_tests_stage1
 TEST_NAME_PARSER_ST2= parser_tests_stage2
+TEST_NAME_EXPANDER = expander_tests
 
 CC                  = cc
 CFLAGS              = -Wall -Wextra -Werror
@@ -22,18 +23,25 @@ SRCS                = src/lexer/lexer.c \
                       src/parser/syntax_check.c \
                       src/parser/parser.c \
                       src/parser/parser_commands.c \
-                      src/parser/parser_redirs.c
+                      src/parser/parser_redirs.c \
+					  src/env/env_get.c \
+					  src/expand/expand_utils.c \
+					  src/expand/expand_status.c \
+					  src/expand/expand_word.c \
+					  src/expand/expand.c
 #                     src/main/init.c \
 #                     src/main/main.c
 
 TEST_SRCS_LEXER     = tests/main_lexer_tests.c
 TEST_SRCS_PARSER_ST1= tests/main_parser_tests_stage1.c
 TEST_SRCS_PARSER_ST2= tests/main_parser_tests_stage2.c
+TEST_SRCS_EXPANDER = tests/main_expander_tests.c
 
 OBJS                = $(SRCS:%.c=$(OBJDIR)/%.o)
 TEST_OBJS_LEXER     = $(TEST_SRCS_LEXER:%.c=$(OBJDIR)/%.o)
 TEST_OBJS_PARSER_ST1= $(TEST_SRCS_PARSER_ST1:%.c=$(OBJDIR)/%.o)
 TEST_OBJS_PARSER_ST2= $(TEST_SRCS_PARSER_ST2:%.c=$(OBJDIR)/%.o)
+TEST_OBJS_EXPANDER = $(TEST_SRCS_EXPANDER:%.c=$(OBJDIR)/%.o)
 
 all: $(NAME)
 
@@ -56,6 +64,9 @@ $(TEST_NAME_PARSER_ST1): $(OBJS) $(TEST_OBJS_PARSER_ST1) $(LIBFT)
 $(TEST_NAME_PARSER_ST2): $(OBJS) $(TEST_OBJS_PARSER_ST2) $(LIBFT)
 	@$(CC) $(CFLAGS) $(OBJS) $(TEST_OBJS_PARSER_ST2) $(LIBFT) -o $(TEST_NAME_PARSER_ST2)
 
+$(TEST_NAME_EXPANDER): $(OBJS) $(TEST_OBJS_EXPANDER) $(LIBFT)
+	@$(CC) $(CFLAGS) $(OBJS) $(TEST_OBJS_EXPANDER) $(LIBFT) -o $(TEST_NAME_EXPANDER)
+
 run_tests: $(TEST_NAME_LEXER)
 	./$(TEST_NAME_LEXER)
 
@@ -64,6 +75,9 @@ run_tests_parser1: $(TEST_NAME_PARSER_ST1)
 
 run_tests_parser2: $(TEST_NAME_PARSER_ST2)
 	./$(TEST_NAME_PARSER_ST2)
+
+run_tests_expander: $(TEST_NAME_EXPANDER)
+	./$(TEST_NAME_EXPANDER)
 
 mem_check: $(TEST_NAME_LEXER)
 	valgrind --leak-check=full \
@@ -78,10 +92,10 @@ clean:
 	@$(MAKE) -C $(LIBFT_DIR) clean
 
 fclean: clean
-	@$(RM) $(NAME) $(TEST_NAME_LEXER) $(TEST_NAME_PARSER_ST1) $(TEST_NAME_PARSER_ST2)
+	@$(RM) $(NAME) $(TEST_NAME_LEXER) $(TEST_NAME_PARSER_ST1) $(TEST_NAME_PARSER_ST2) $(TEST_NAME_EXPANDER)
 	@$(MAKE) -C $(LIBFT_DIR) fclean
 
 re: fclean all
 
-.PHONY: all clean fclean re run_tests run_tests_parser1 run_tests_parser2 mem_check
+.PHONY: all clean fclean re run_tests run_tests_parser1 run_tests_parser2 run_tests_expander mem_check
 
