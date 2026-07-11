@@ -6,7 +6,7 @@
 /*   By: ileongar <ileongar@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/08 21:00:22 by ileongar          #+#    #+#             */
-/*   Updated: 2026/07/10 23:23:23 by ileongar         ###   ########.fr       */
+/*   Updated: 2026/07/11 16:10:00 by ileongar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int main(int argc, char **argv, char **envp)
     setup_signals();
     shell_loop(&shell);
     cleanup_shell(&shell);
-    return(shell->last_status);
+    return(shell.last_status);
 }
 
 static int shell_loop(t_shell *shell)
@@ -37,7 +37,7 @@ static int shell_loop(t_shell *shell)
         }
         if (shell->line[0] != '\0')
             add_history(shell->line);
-        if(process_line(&shell) == -1)
+        if(process_line(shell) == -1)
         {
             free(shell->line);
             shell->line = NULL;

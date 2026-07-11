@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ileongar <ileongar@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/07 17:01:03 by ykonka            #+#    #+#             */
-/*   Updated: 2026/07/09 17:47:37 by ykonka           ###   ########.fr       */
+/*   Updated: 2026/07/11 16:20:23 by ileongar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # define PARSER_H
 # include "lexer.h"
 # include <stdio.h>
+# include <stdlib.h>
 
 typedef enum e_redir_type
 {

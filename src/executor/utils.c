@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   executor.c                                         :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ileongar <ileongar@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/07/10 23:45:06 by ileongar          #+#    #+#             */
-/*   Updated: 2026/07/11 16:20:38 by ileongar         ###   ########.fr       */
+/*   Created: 2026/07/11 17:14:32 by ileongar          #+#    #+#             */
+/*   Updated: 2026/07/11 17:29:18 by ileongar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,3 @@ int cmd_count(t_cmd *cmds)
     }
     return(n);
 }
-
-int execute_shell(t_shell *shell)
-{
-    int n;
-
-    if (!shell || !shell->cmds)
-        return (1);
-    n = cmd_count(shell->cmds);
-    if (n == 1 && shell->cmds->argv && shell->cmds->argv[0] && is_builtin(shell->cmds->argv[0]))
-        return(exec_builtin(shell, shell->cmds));
-    return(execute_pipeline(shell, shell->cmds));
-}
-

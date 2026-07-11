@@ -6,7 +6,7 @@
 /*   By: ileongar <ileongar@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/07 17:29:48 by ykonka            #+#    #+#             */
-/*   Updated: 2026/07/11 00:01:49 by ileongar         ###   ########.fr       */
+/*   Updated: 2026/07/11 17:16:12 by ileongar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,14 @@
 
 #ifndef EXECUTOR_H
 # define EXECUTOR_H
+
+#include "parser.h"
+#include <unistd.h>
+#include <stdlib.h>
+#include <fcntl.h>
+#include <signal.h>
+#include <sys/wait.h>
+#include <sys/types.h>
 
 typedef struct s_redir  t_redir;
 
