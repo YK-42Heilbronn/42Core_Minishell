@@ -6,11 +6,11 @@
 /*   By: ileongar <ileongar@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/11 17:21:38 by ileongar          #+#    #+#             */
-/*   Updated: 2026/07/11 17:54:51 by ileongar         ###   ########.fr       */
+/*   Updated: 2026/07/12 01:20:58 by ileongar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "executor.h"
+#include "../include/executor.h"
 
 int wait_pipeline(pid_t last_pid, t_shell *shell)
 {
@@ -35,9 +35,23 @@ int wait_pipeline(pid_t last_pid, t_shell *shell)
     return(shell->last_status);
 }
 
-int run_child(t_shell *shell, t_cmd *cmd, int in_fd, int out_fd)
-{
-    char *path;
-    
-    
-}
+// int execute_pipeline(t_shell *shell, t_cmd *cmds)
+// {
+//     t_cmd   *cur;
+//     int     pipefd[2];
+//     int     stdin_fd;
+//     pid_t   pid;
+//     pid_t   last_pid;
+
+//     if (!shell || !cmds)
+//         return (1);
+//     if (cmd_count(cmds) == 1 && cmds->argv && cmds->argv[0] && is_builtin(cmds->argv[0]))
+//         return(exec_builtin(shell, cmds));
+//     cur = cmds;
+//     stdin_fd = STDIN_FILENO;
+//     last_pid = -1;
+//     while(cur)
+//     {
+//         if(cur->next)
+//     }
+// }
