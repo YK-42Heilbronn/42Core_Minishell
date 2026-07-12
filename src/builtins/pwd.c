@@ -1,12 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ileongar <ileongar@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/07/10 23:43:20 by ileongar          #+#    #+#             */
-/*   Updated: 2026/07/11 00:01:57 by ileongar         ###   ########.fr       */
+/*   Created: 2026/07/12 17:39:34 by ileongar          #+#    #+#             */
+/*   Updated: 2026/07/12 21:59:00 by ileongar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../include/executor.h"
+
+int builtin_pwd(void)
+{
+    char    *pwd;
+
+    pwd = getcwd(NULL, 0);
+    if (pwd == NULL)
+        return (perror("getcwd() failed"), 1);
+    ft_putstr_fd(pwd, 1);
+    ft_putchar_fd('\n', 1);
+    free(pwd);
+    return (0);
+}

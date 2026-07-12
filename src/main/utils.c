@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_utils.c                                        :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ileongar <ileongar@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/11 00:02:15 by ileongar          #+#    #+#             */
-/*   Updated: 2026/07/11 00:28:54 by ileongar         ###   ########.fr       */
+/*   Updated: 2026/07/12 19:17:09 by ileongar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,13 +71,19 @@ void add_env_back(t_env **env, t_env *new_node)
     current->next = new_node;
 }
 
-char    *get_env_value(t_env *env, char *key)
+static void	cmd_add_back(t_cmd **list, t_cmd *new_cmd)
 {
-    while (env)
-    {
-        if (ft_strcmp(env->key, key) == 0)
-            return (env->value);
-        env = env->next;   
-    }
-    return(NULL);
+	t_cmd	*last;
+
+	if (!list || !new_cmd)
+		return ;
+	if (!*list)
+	{
+		*list = new_cmd;
+		return ;
+	}
+	last = *list;
+	while (last->next)
+		last = last->next;
+	last->next = new_cmd;
 }

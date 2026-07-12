@@ -6,7 +6,7 @@
 /*   By: ileongar <ileongar@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/07 17:29:48 by ykonka            #+#    #+#             */
-/*   Updated: 2026/07/11 17:16:12 by ileongar         ###   ########.fr       */
+/*   Updated: 2026/07/12 19:14:24 by ileongar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 
 #include "parser.h"
 #include <unistd.h>
+#include <string.h>
 #include <stdlib.h>
 #include <fcntl.h>
 #include <signal.h>

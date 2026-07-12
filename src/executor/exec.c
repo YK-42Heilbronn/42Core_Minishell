@@ -1,29 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   executor.c                                         :+:      :+:    :+:   */
+/*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ileongar <ileongar@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/10 23:45:06 by ileongar          #+#    #+#             */
-/*   Updated: 2026/07/11 16:20:38 by ileongar         ###   ########.fr       */
+/*   Updated: 2026/07/12 18:59:45 by ileongar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
-
-int cmd_count(t_cmd *cmds)
-{
-    int n;
-
-    n = 0;
-    while(cmds)
-    {
-        n++;
-        cmds = cmds->next;
-    }
-    return(n);
-}
 
 int execute_shell(t_shell *shell)
 {
@@ -36,4 +23,3 @@ int execute_shell(t_shell *shell)
         return(exec_builtin(shell, shell->cmds));
     return(execute_pipeline(shell, shell->cmds));
 }
-

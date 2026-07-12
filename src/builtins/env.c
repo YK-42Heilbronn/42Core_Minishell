@@ -1,28 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ileongar <ileongar@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/09 16:22:02 by ykonka            #+#    #+#             */
-/*   Updated: 2026/07/12 19:14:20 by ileongar         ###   ########.fr       */
+/*   Created: 2026/07/10 23:43:20 by ileongar          #+#    #+#             */
+/*   Updated: 2026/07/12 18:04:32 by ileongar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-#define MINISHELL_H
-#include <unistd.h>
-#include <stdlib.h>
-#include <string.h>
-#include <errno.h>
-#include "libft.h"
-#include <signal.h>
-
-/* readline & history */
-#include <readline/readline.h>
-#include <readline/history.h>
-
-
-
-#endif
+int builtin_env(t_shell *shell)
+{
+    t_env   *env;
+    
+    env = shell->env;
+    while (env)
+    {
+        if (env->value)
+        {
+            write(1, env->key, ft_strlen(env->key));
+            write(1, "=", 1);
+            write(1, env->value, ft_strlen(env->value));
+            write(1, "\n", 1);
+        }
+        env = env->next;
+    }
+    return (0);
+}
