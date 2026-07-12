@@ -6,14 +6,13 @@
 /*   By: ileongar <ileongar@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/12 21:57:55 by ileongar          #+#    #+#             */
-/*   Updated: 2026/07/12 23:08:54 by ileongar         ###   ########.fr       */
+/*   Updated: 2026/07/12 23:49:22 by ileongar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
-#include "../include/parser.h"
+#include "minishell.h"
 
-int is_valid_identifier(const char *s)
+int is_valid_unset_identifier(const char *s)
 {
     int i;
 
@@ -59,7 +58,26 @@ void unset_one(t_env **env, const char *key)
     }
 }
 
-// int builtin_unset(t_shell *shell, t_cmd *cmd)
-// {
-    
-// }
+int builtin_unset(t_shell *shell, t_cmd *cmd)
+{
+    int i;
+    int status;
+
+    if(!shell || !cmd)
+        return (1);
+    i = 1;
+    status = 0;
+    while(cmd->argv[i])
+    {
+        if (!is_valid_unset_identifier(cmd->argv[i]))
+        {
+            write(2, "minishell: unset: ", 20);
+            write(2, cmd->argv[i], ft_strlen(cmd->argv[i]));
+            write(2, ": not a valid identifier\n", 26);
+        }
+        else
+            unset_one(&shell->env, cmd->argv[i]);
+        i++;
+    }
+    return (status);
+}

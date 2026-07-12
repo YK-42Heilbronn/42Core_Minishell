@@ -6,16 +6,14 @@
 /*   By: ileongar <ileongar@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/10 23:45:09 by ileongar          #+#    #+#             */
-/*   Updated: 2026/07/12 19:10:14 by ileongar         ###   ########.fr       */
+/*   Updated: 2026/07/13 00:25:11 by ileongar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/executor.h"
-#include "../include/minishell.h"
+#include "executor.h"
 
 //TODO: 
 // devide path resolution
-// free_split()
 
 char    *join_path(const char *dir, const char *cmd)
 {
@@ -68,4 +66,19 @@ char *cmd_path_resolution(t_shell *shell, char *cmd)
     }
     free_split(dirs);
     return (full);
+}
+
+void    free_split(char **arr)
+{
+    int i;
+
+    if (!arr)
+        return;
+    i = 0;
+    while (arr[i])
+    {
+        free(arr[i]);
+        i++;
+    }
+    free(arr);
 }

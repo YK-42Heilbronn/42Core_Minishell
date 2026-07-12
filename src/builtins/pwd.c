@@ -6,11 +6,11 @@
 /*   By: ileongar <ileongar@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/12 17:39:34 by ileongar          #+#    #+#             */
-/*   Updated: 2026/07/12 21:59:00 by ileongar         ###   ########.fr       */
+/*   Updated: 2026/07/12 23:49:16 by ileongar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/executor.h"
+#include "minishell.h"
 
 int builtin_pwd(void)
 {

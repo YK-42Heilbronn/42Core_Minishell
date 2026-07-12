@@ -6,12 +6,11 @@
 /*   By: ileongar <ileongar@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/12 20:26:11 by ileongar          #+#    #+#             */
-/*   Updated: 2026/07/12 21:58:58 by ileongar         ###   ########.fr       */
+/*   Updated: 2026/07/12 23:49:08 by ileongar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
-#include "../include/parser.h"
+#include "minishell.h"
 
 //TODO: why export_one?
 

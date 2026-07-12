@@ -6,11 +6,11 @@
 /*   By: ileongar <ileongar@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/12 17:56:16 by ileongar          #+#    #+#             */
-/*   Updated: 2026/07/12 20:27:52 by ileongar         ###   ########.fr       */
+/*   Updated: 2026/07/12 23:36:28 by ileongar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/executor.h"
+#include "executor.h"
 
 int is_builtin(const char *cmd)
 {

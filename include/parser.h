@@ -6,13 +6,14 @@
 /*   By: ileongar <ileongar@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/07 17:01:03 by ykonka            #+#    #+#             */
-/*   Updated: 2026/07/11 16:20:23 by ileongar         ###   ########.fr       */
+/*   Updated: 2026/07/12 23:33:43 by ileongar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 // Build t_cmd objects from tokens,
 // detect syntax errors around pipes and redirections
 // parser output, environment data, and shell state
+
 #ifndef PARSER_H
 # define PARSER_H
 # include "lexer.h"

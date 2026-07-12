@@ -6,7 +6,7 @@
 /*   By: ileongar <ileongar@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/07 17:29:48 by ykonka            #+#    #+#             */
-/*   Updated: 2026/07/12 19:14:24 by ileongar         ###   ########.fr       */
+/*   Updated: 2026/07/13 00:10:48 by ileongar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,11 @@
 # define EXECUTOR_H
 
 #include "parser.h"
+#include "libft.h"
 #include <unistd.h>
 #include <string.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include <fcntl.h>
 #include <signal.h>
 #include <sys/wait.h>

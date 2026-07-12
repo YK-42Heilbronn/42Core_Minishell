@@ -6,11 +6,11 @@
 /*   By: ileongar <ileongar@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/11 17:21:38 by ileongar          #+#    #+#             */
-/*   Updated: 2026/07/12 20:28:03 by ileongar         ###   ########.fr       */
+/*   Updated: 2026/07/12 23:37:27 by ileongar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/executor.h"
+#include "executor.h"
 
 //TODO: shorten the code
 
