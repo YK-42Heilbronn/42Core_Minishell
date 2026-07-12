@@ -24,11 +24,13 @@ SRCS                = src/lexer/lexer.c \
                       src/parser/parser.c \
                       src/parser/parser_commands.c \
                       src/parser/parser_redirs.c \
-					  src/env/env_get.c \
 					  src/expand/expand_utils.c \
 					  src/expand/expand_status.c \
 					  src/expand/expand_word.c \
-					  src/expand/expand.c
+					  src/expand/expand.c \
+					  src/env/env_init.c \
+					  src/env/env_utils.c \
+					  src/env/env_to_array.c \
 #                     src/main/init.c \
 #                     src/main/main.c
 
