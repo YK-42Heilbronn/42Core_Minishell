@@ -6,7 +6,7 @@
 /*   By: ileongar <ileongar@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/07 17:29:48 by ykonka            #+#    #+#             */
-/*   Updated: 2026/07/13 17:32:32 by ileongar         ###   ########.fr       */
+/*   Updated: 2026/07/13 18:24:24 by ileongar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ int						exec_builtin(t_shell *shell, t_cmd *cmd);
 char					*cmd_path_resolution(t_shell *shell, char *cmd);
 char					*get_path_env(t_env *env);
 char					*find_cmd_in_path(char **dirs, char *cmd);
+void					free_split(char **arr);
 
 // executor/exec_child.c
 int						run_child_process(t_shell *shell, t_cmd *cmd,

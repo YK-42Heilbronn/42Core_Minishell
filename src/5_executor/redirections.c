@@ -6,7 +6,7 @@
 /*   By: ileongar <ileongar@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/13 17:01:22 by ileongar          #+#    #+#             */
-/*   Updated: 2026/07/13 17:29:37 by ileongar         ###   ########.fr       */
+/*   Updated: 2026/07/13 19:18:41 by ileongar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	apply_redirs(t_shell *shell, t_cmd *cmd, int is_child)
 	t_redir	*r;
 
 	(void)is_child;
-	if (!shell || cmd)
+	if (!shell || !cmd)
 		return (1);
 	r = cmd->redirs;
 	while (r)

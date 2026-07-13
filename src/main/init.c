@@ -6,13 +6,29 @@
 /*   By: ileongar <ileongar@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/08 21:17:27 by ileongar          #+#    #+#             */
-/*   Updated: 2026/07/13 15:17:34 by ileongar         ###   ########.fr       */
+/*   Updated: 2026/07/13 19:08:25 by ileongar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expander.h"
 #include "minishell.h"
 #include "parser.h"
+
+// void	init_shell(t_shell *shell, char **envp)
+// {
+// 	ft_memset(shell, 0, sizeof(t_shell));
+// 	shell->last_status = 0;
+// 	shell->line = NULL;
+// 	shell->tokens = NULL;
+// 	shell->cmds = NULL;
+// 	shell->env = dup_env(envp);
+// 	if (!shell->env)
+// 	{
+// 		shell->last_status = 1;
+// 		return ;
+// 	}
+// 	lvl_up(shell);
+// }
 
 void	init_shell(t_shell *shell, char **envp)
 {
@@ -21,7 +37,8 @@ void	init_shell(t_shell *shell, char **envp)
 	shell->line = NULL;
 	shell->tokens = NULL;
 	shell->cmds = NULL;
-	shell->env = dup_env(envp);
+	shell->env = NULL;
+	env_init(shell, envp);
 	if (!shell->env)
 	{
 		shell->last_status = 1;

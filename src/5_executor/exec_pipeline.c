@@ -6,7 +6,7 @@
 /*   By: ileongar <ileongar@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/11 17:21:38 by ileongar          #+#    #+#             */
-/*   Updated: 2026/07/13 17:56:38 by ileongar         ###   ########.fr       */
+/*   Updated: 2026/07/13 19:20:08 by ileongar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,11 @@ static void	parent_exec(t_cmd *cur, t_pipe *ctx, int pipefd[2])
 		close(pipefd[1]);
 		ctx->stdin_fd = pipefd[0];
 	}
+	else
+	{
+		close(pipefd[0]);
+		close(pipefd[1]);
+	}
 }
 
 static int	run_pipeline_step(t_shell *shell, t_cmd *cur, t_pipe *ctx)
@@ -61,7 +66,7 @@ static int	run_pipeline_step(t_shell *shell, t_cmd *cur, t_pipe *ctx)
 	if (pid < 0)
 		return (perror(strerror(pid)), 1);
 	if (pid == 0)
-		run_child_process (shell, cur, ctx->stdin_fd, pipefd[1]);
+		child_exec(shell, cur, ctx->stdin_fd, pipefd);
 	if (ctx->last_pid == -1)
 		ctx->last_pid = pid;
 	parent_exec(cur, ctx, pipefd);

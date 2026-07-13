@@ -6,13 +6,11 @@
 /*   By: ileongar <ileongar@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/10 23:45:09 by ileongar          #+#    #+#             */
-/*   Updated: 2026/07/13 17:29:03 by ileongar         ###   ########.fr       */
+/*   Updated: 2026/07/13 19:19:35 by ileongar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
-
-void	free_split(char **arr);
 
 char	*join_path(const char *dir, const char *cmd)
 {
@@ -48,12 +46,13 @@ char	*find_cmd_in_path(char **dirs, char *cmd)
 	{
 		full = join_path(dirs[i], cmd);
 		if (full && access(full, X_OK) == 0)
-			break ;
+			return (full);
 		free(full);
 		i++;
 	}
 	return (NULL);
 }
+
 
 char	*cmd_path_resolution(t_shell *shell, char *cmd)
 {

@@ -6,7 +6,7 @@
 /*   By: ileongar <ileongar@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/10 23:45:02 by ileongar          #+#    #+#             */
-/*   Updated: 2026/07/13 18:08:05 by ileongar         ###   ########.fr       */
+/*   Updated: 2026/07/13 19:20:24 by ileongar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@ int	run_child_process(t_shell *shell, t_cmd *cmd, int stdin_fd, int stdout_fd)
 		exit(exec_builtin(shell, cmd));
 	path = cmd_path_resolution(shell, cmd->argv[0]);
 	if (!path)
-		exit(127);
+		_exit(127);
 	execve(path, cmd->argv, NULL);
 	free(path);
-	exit(127);
+	_exit(127);
 }
 
 void	child_exec(t_shell *shell, t_cmd *cur, int stdin_fd, int pipefd[2])
@@ -44,6 +44,6 @@ void	child_exec(t_shell *shell, t_cmd *cur, int stdin_fd, int pipefd[2])
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
 	if (cur->next)
-		run_child_process(shell, cur, stdin_fd, pipefd[0]);
+		run_child_process(shell, cur, stdin_fd, pipefd[1]);
 	run_child_process(shell, cur, stdin_fd, STDOUT_FILENO);
 }
