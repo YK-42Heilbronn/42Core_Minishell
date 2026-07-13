@@ -1,29 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
+/*   expand_status.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/15 14:41:01 by ykonka            #+#    #+#             */
-/*   Updated: 2026/07/11 16:08:55 by ykonka           ###   ########.fr       */
+/*   Created: 2026/07/10 16:02:27 by ykonka            #+#    #+#             */
+/*   Updated: 2026/07/11 17:33:50 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "expander.h"
 
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
+/*
+Behavior
+Convert shell->last_status to a newly allocated string with ft_itoa.
+Return that string.
+Return NULL on allocation failure
+*/
+char	*expand_exit_status(t_shell *shell)
 {
-	size_t	ind;
-
-	ind = 0;
-	while (s1[ind] && s2[ind] && ind < n)
-	{
-		if (s1[ind] != s2[ind])
-			return ((unsigned char)s1[ind] - (unsigned char)s2[ind]);
-		ind++;
-	}
-	if (ind == n)
-		return (0);
-	return ((unsigned char)s1[ind] - (unsigned char)s2[ind]);
+	if (!shell)
+		return (NULL);
+	return (ft_itoa(shell->last_status));
 }

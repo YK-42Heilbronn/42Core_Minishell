@@ -3,18 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ileongar <ileongar@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/09 14:51:18 by ykonka            #+#    #+#             */
-/*   Updated: 2026/07/11 00:44:15 by ileongar         ###   ########.fr       */
+/*   Updated: 2026/07/13 06:39:50 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include "parser.h"
-
 #include "parser.h"
 #include "lexer.h"
+#include "expander.h"
 
 static void	cmd_add_back(t_cmd **list, t_cmd *new_cmd)
 {
@@ -47,6 +45,7 @@ t_cmd	*parse_pipeline(t_token **tokens, t_shell *shell)
 	return (cmd);
 }
 
+// cur is modified in the parse_pipeline
 t_cmd	*parse_tokens(t_token *tokens, t_shell *shell)
 {
 	t_token	*cur;
@@ -70,22 +69,33 @@ t_cmd	*parse_tokens(t_token *tokens, t_shell *shell)
 	return (cmd_list);
 }
 
-// int	process_input(char *line, t_shell *shell)
-// {
-// 	t_token	*tokens;
-// 	t_cmd	*cmds;
+// line
+//  -> has_unclosed_quotes
+//  -> lex_input
+//  -> syntax_check_tokens
+//  -> expand_tokens
+//  -> parse_tokens
+//  -> shell->cmds
+int	process_input(char *line, t_shell *shell)
+{
+	t_token *lexed_tokens;
+	t_cmd *parsed_cmd;
 
-// 	if (has_unclosed_quotes(line))
-// 		return (print_syntax_error("unclosed quotes"), 1);
-// 	tokens = lex_input(line, shell);
-// 	if (!tokens)
-// 		return (1);
-// 	if (syntax_check_tokens(tokens))
-// 		return (free_tokens(tokens), 1);
-// 	cmds = parse_tokens(tokens, shell);
-// 	free_tokens(tokens);
-// 	if (!cmds)
-// 		return (1);
-// 	shell->cmds = cmds;
-// 	return (0);
-// }
+	if (!line || !shell)
+		return (1);
+	if (has_unclosed_quotes(line))
+		return (print_syntax_error("unclosed quotes"), 1);
+	lexed_tokens = lex_input(line, shell);
+	if (lexed_tokens == NULL)
+		return (1);
+	if (syntax_check_tokens(lexed_tokens))
+		return (free_tokens(lexed_tokens), 1);
+	if (expand_tokens(lexed_tokens, shell))
+		return (free_tokens(lexed_tokens), 1);
+	parsed_cmd = parse_tokens(lexed_tokens, shell);
+	free_tokens(lexed_tokens);
+	if (!parsed_cmd)
+		return (1);
+	shell->cmds = parsed_cmd;
+	return (0);
+}

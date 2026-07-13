@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ileongar <ileongar@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/07 17:01:03 by ykonka            #+#    #+#             */
-/*   Updated: 2026/07/12 23:33:43 by ileongar         ###   ########.fr       */
+/*   Updated: 2026/07/13 06:39:57 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,9 @@ int					print_syntax_error(char *token);
 int					syntax_check_tokens(t_token *tokens);
 
 //  src/parser/parser.c
-t_cmd				*parse_tokens(t_token *tokens, t_shell *shell);
+int					process_input(char *line, t_shell *shell);
 t_cmd				*parse_pipeline(t_token **tokens, t_shell *shell);
+t_cmd				*parse_tokens(t_token *tokens, t_shell *shell);
 
 //  src/parser/parser_commands.c
 t_cmd				*parse_command(t_token **tokens, t_shell *shell);
@@ -85,3 +86,4 @@ t_redir				*new_redir(t_redir_type type, char *file);
 void				cmd_add_redir(t_cmd *cmd, t_redir *redir);
 
 #endif
+
