@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ileongar <ileongar@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/09 14:51:18 by ykonka            #+#    #+#             */
-/*   Updated: 2026/07/13 19:17:48 by ykonka           ###   ########.fr       */
+/*   Updated: 2026/07/13 22:48:23 by ileongar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,25 +77,49 @@ t_cmd	*parse_tokens(t_token *tokens, t_shell *shell)
 //  -> expand_tokens
 //  -> parse_tokens
 //  -> shell->cmds
+
+// int	process_input(char *line, t_shell *shell)
+// {
+// 	if (!line || !shell)
+// 		return (shell->last_status=1, -1);
+// 	if (has_unclosed_quotes(line))
+// 		return (print_syntax_error("minishell: unclosed quotes"), shell->last_status=1, -1);
+// 	if (shell->tokens)
+// 		free_tokens(shell->tokens);
+// 	shell->tokens = lex_input(line, shell);
+// 	if (shell->tokens == NULL)
+// 		return (shell->last_status=1, -1);
+// 	if (syntax_check_tokens(shell->tokens))
+// 		return (free_tokens(shell->tokens), shell->last_status=1, -1);
+// 	if (!expand_tokens(shell->tokens, shell))
+// 		return (free_tokens(shell->tokens), shell->last_status=1, -1);
+// 	if (shell->cmds)
+// 		free_cmds(shell->cmds);
+// 	shell->cmds = parse_tokens(shell->tokens, shell);
+// 	if (!shell->cmds)
+// 		return (shell->last_status=1, -1);
+// 	return (0);
+// }
+
 int	process_input(char *line, t_shell *shell)
 {
 	if (!line || !shell)
-		return (shell->last_status=1, -1);
+		return (-1);
 	if (has_unclosed_quotes(line))
-		return (print_syntax_error("minishell: unclosed quotes"), shell->last_status=1, -1);
+		return (print_syntax_error("minishell: unclosed quotes"),-1);
 	if (shell->tokens)
 		free_tokens(shell->tokens);
 	shell->tokens = lex_input(line, shell);
 	if (shell->tokens == NULL)
-		return (shell->last_status=1, -1);
+		return (-1);
 	if (syntax_check_tokens(shell->tokens))
-		return (free_tokens(shell->tokens), shell->last_status=1, -1);
+		return (free_tokens(shell->tokens),  -1);
 	if (!expand_tokens(shell->tokens, shell))
-		return (free_tokens(shell->tokens), shell->last_status=1, -1);
+		return (free_tokens(shell->tokens), -1);
 	if (shell->cmds)
 		free_cmds(shell->cmds);
 	shell->cmds = parse_tokens(shell->tokens, shell);
 	if (!shell->cmds)
-		return (shell->last_status=1, -1);
+		return (-1);
 	return (0);
 }

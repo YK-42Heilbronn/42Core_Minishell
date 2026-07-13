@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ileongar <ileongar@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/08 21:00:22 by ileongar          #+#    #+#             */
-/*   Updated: 2026/07/13 19:56:24 by ykonka           ###   ########.fr       */
+/*   Updated: 2026/07/13 23:03:33 by ileongar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,9 @@ static int shell_loop(t_shell *shell)
         }
         free(shell->line);
         shell->line = NULL;
-        if (shell->exit_flag)
-            break;
-        cleanup_command(shell);
+        // if (shell->exit_flag)
+        //     break;
+        // cleanup_command(shell);
     }
     return (0);
 }
