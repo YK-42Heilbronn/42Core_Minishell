@@ -6,11 +6,12 @@
 /*   By: ileongar <ileongar@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/11 17:21:38 by ileongar          #+#    #+#             */
-/*   Updated: 2026/07/13 17:02:35 by ileongar         ###   ########.fr       */
+/*   Updated: 2026/07/13 17:56:38 by ileongar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
+#include "minishell.h"
 
 int	wait_pipeline(pid_t last_pid, t_shell *shell)
 {
@@ -19,12 +20,15 @@ int	wait_pipeline(pid_t last_pid, t_shell *shell)
 	pid_t	pid;
 
 	last_status = 0;
-	pid = wait(&status);
+	if (last_pid <= 0)
+		return (shell->last_status);
+	status = 0;
+	pid = waitpid(-1, &status, 0);
 	while (pid > 0)
 	{
 		if (pid == last_pid)
 			last_status = status;
-		pid = wait(&status);
+		pid = waitpid(-1, &status, 0);
 	}
 	if (WIFEXITED(last_status))
 		shell->last_status = WEXITSTATUS(last_status);
@@ -35,39 +39,39 @@ int	wait_pipeline(pid_t last_pid, t_shell *shell)
 	return (shell->last_status);
 }
 
-static void	parent_exec(t_cmd *cur, t_pipe *ctx, pid_t pid, int pipefd[2])
+static void	parent_exec(t_cmd *cur, t_pipe *ctx, int pipefd[2])
 {
-	ctx->last_pid = pid;
-
 	if (ctx->stdin_fd != STDIN_FILENO)
 		close(ctx->stdin_fd);
 	if (cur->next)
 	{
-		close(ctx->pipefd[1]);
-		ctx->stdin_fd = ctx->pipefd[0];
+		close(pipefd[1]);
+		ctx->stdin_fd = pipefd[0];
 	}
 }
 
-static int	run_pipeline_step(t_shell *shell, t_cmd *cur, int stdin_fd,
-		pid_t *last_pid)
+static int	run_pipeline_step(t_shell *shell, t_cmd *cur, t_pipe *ctx)
 {
 	int		pipefd[2];
 	pid_t	pid;
 
-	if (cur->next && pipe(ctx->pipefd) < 0)
+	if (cur->next && pipe(pipefd) < 0)
 		return (perror("pipe"), 1);
 	pid = fork();
 	if (pid < 0)
-		return (perror("fork"), 1);
+		return (perror(strerror(pid)), 1);
 	if (pid == 0)
-		child_exec(shell, cur, ctx);
-	parent_exec(cur, ctx, pid);
+		run_child_process (shell, cur, ctx->stdin_fd, pipefd[1]);
+	if (ctx->last_pid == -1)
+		ctx->last_pid = pid;
+	parent_exec(cur, ctx, pipefd);
 	return (0);
 }
 
 int	execute_pipeline(t_shell *shell, t_cmd *cmds)
 {
 	t_pipe	ctx;
+	t_cmd	*cur;
 
 	if (!shell || !cmds)
 		return (1);
@@ -79,9 +83,9 @@ int	execute_pipeline(t_shell *shell, t_cmd *cmds)
 	ctx.last_pid = -1;
 	while (cur)
 	{
-		if (run_pipeline_step(shell, cur, &stdin_fd, &last_pid))
-			return (0);
+		if (run_pipeline_step(shell, cur, &ctx) != 0)
+			return (1);
 		cur = cur->next;
 	}
-	return (wait_pipeline(last_pid, shell));
+	return (wait_pipeline(ctx.last_pid, shell));
 }

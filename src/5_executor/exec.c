@@ -6,11 +6,12 @@
 /*   By: ileongar <ileongar@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/10 23:45:06 by ileongar          #+#    #+#             */
-/*   Updated: 2026/07/13 15:30:59 by ileongar         ###   ########.fr       */
+/*   Updated: 2026/07/13 17:58:17 by ileongar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
+#include "minishell.h"
 
 int	execute_shell(t_shell *shell)
 {
