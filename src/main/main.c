@@ -3,29 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ileongar <ileongar@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/08 21:00:22 by ileongar          #+#    #+#             */
-/*   Updated: 2026/07/13 14:07:16 by ykonka           ###   ########.fr       */
+/*   Updated: 2026/07/13 15:19:03 by ileongar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
 #include "minishell.h"
+#include "parser.h"
 
-static int shell_loop(t_shell *shell);
-int main(int argc, char **argv, char **envp)
+static int	shell_loop(t_shell *shell);
+
+int	main(int argc, char **argv, char **envp)
 {
-    t_shell shell;
+	t_shell	shell;
 
-    (void)argc;
-    (void)argv;
-    ft_memset(&shell, 0, sizeof(shell));
-    init_shell(&shell, envp);
-    setup_signals();
-    shell_loop(&shell);
-    // cleanup_shell(&shell);
-    return(shell.last_status);
+	(void)argc;
+	(void)argv;
+	ft_memset(&shell, 0, sizeof(shell));
+	init_shell(&shell, envp);
+	setup_signals();
+	shell_loop(&shell);
+	// cleanup_shell(&shell);
+	return (shell.last_status);
 }
 
 // static int shell_loop(t_shell *shell)
@@ -44,7 +45,7 @@ int main(int argc, char **argv, char **envp)
 //         {
 //             free(shell->line);
 //             shell->line = NULL;
-//             continue;
+//             continue ;
 //         }
 //         free(shell->line);
 //         shell->line = NULL;
@@ -53,21 +54,21 @@ int main(int argc, char **argv, char **envp)
 //     return(0);
 // }
 
-static int shell_loop(t_shell *shell)
+static int	shell_loop(t_shell *shell)
 {
-    while (1)
-    {
-        shell->line = readline("minishell$ ");
-        if (shell->line == NULL)
-        {
-            write(1, "exit\n", 5);
-            break ;
-        }
-        if (shell->line[0] != '\0')
-            add_history(shell->line);
-        process_line(shell);
-        free(shell->line);
-        shell->line = NULL;
-    }
-    return (shell->last_status);
+	while (1)
+	{
+		shell->line = readline("minishell$ ");
+		if (shell->line == NULL)
+		{
+			write(1, "exit\n", 5);
+			break ;
+		}
+		if (shell->line[0] != '\0')
+			add_history(shell->line);
+		process_line(shell);
+		free(shell->line);
+		shell->line = NULL;
+	}
+	return (shell->last_status);
 }

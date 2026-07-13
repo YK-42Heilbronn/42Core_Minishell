@@ -3,19 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ileongar <ileongar@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/12 19:10:23 by ileongar          #+#    #+#             */
-/*   Updated: 2026/07/13 09:51:09 by ykonka           ###   ########.fr       */
+/*   Updated: 2026/07/13 17:30:34 by ileongar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parser.h"
 
-// TODO: rewrite set_env_value, get rid of ?
-// what id chdir
-// divide buildin function
+// TODO: relocate functions, merge with env 
 
 t_env	*find_env(t_env *env, const char *key)
 {
@@ -83,7 +81,35 @@ void	cd_error_print(const char *arg)
 	write(2, "\n", 1);
 }
 
-static void	update_pwd_vars(t_shell *shell, char *oldpwd)
+static char	*get_cd_target(t_shell *shell, t_cmd *cmd)
+{
+	char	*target;
+
+	if (!cmd->argv[1])
+	{
+		target = get_env_value(shell->env, "HOME");
+		if (!target)
+		{
+			write(2, "minishell: cd: HOME not set\n", 28);
+			return (NULL);
+		}
+	}
+	else
+		target = cmd->argv[1];
+	return (target);
+}
+
+static char	*save_oldpwd(char *cwd)
+{
+	char	*oldpwd;
+
+	oldpwd = NULL;
+	if (cwd[0])
+		oldpwd = ft_strdup(cwd);
+	return (oldpwd);
+}
+
+static void	update_pwd_after_cd(t_shell *shell, char *oldpwd)
 {
 	char	cwd[4096];
 
@@ -105,19 +131,12 @@ int	builtin_cd(t_shell *shell, t_cmd *cmd)
 
 	if (!shell || !cmd)
 		return (1);
-	if (!cmd->argv[1])
-	{
-		target = get_env_value(shell->env, "HOME");
-		if (!target)
-			return (write(2, "minishell: cd: HOME not set\n", 28), 1);
-	}
-	else
-		target = cmd->argv[1];
+	target = get_cd_target(shell, cmd);
+	if (!target)
+		return (1);
 	if (!getcwd(cwd, sizeof(cwd)))
 		cwd[0] = '\0';
-	oldpwd = NULL;
-	if (cwd[0])
-		oldpwd = ft_strdup(cwd);
+	oldpwd = save_oldpwd(cwd);
 	if (chdir(target) < 0)
 	{
 		cd_error_print(target);
@@ -125,6 +144,6 @@ int	builtin_cd(t_shell *shell, t_cmd *cmd)
 			free(oldpwd);
 		return (1);
 	}
-	update_pwd_vars(shell, oldpwd);
+	update_pwd_after_cd(shell, oldpwd);
 	return (0);
 }

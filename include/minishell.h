@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ileongar <ileongar@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 16:22:02 by ykonka            #+#    #+#             */
-/*   Updated: 2026/07/13 14:10:56 by ykonka           ###   ########.fr       */
+/*   Updated: 2026/07/13 17:38:16 by ileongar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,10 @@ t_env	*dup_env(char **envp);
 void	lvl_up(t_shell *shell);
 
 // main/utils.c
+// void	free_env_list(t_env *env);
+// t_env	*new_env_node(const char *line);
+// void	add_env_back(t_env **env, t_env *new_node);
+int		cmd_count(t_cmd *cmds);
 
 // main/signals.c
 void	sigint_handler(int sig);

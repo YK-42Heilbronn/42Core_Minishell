@@ -3,37 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ileongar <ileongar@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/08 21:17:30 by ileongar          #+#    #+#             */
-/*   Updated: 2026/07/13 10:55:32 by ykonka           ###   ########.fr       */
+/*   Updated: 2026/07/13 15:20:00 by ileongar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void sigint_handler(int sig)
+void	sigint_handler(int sig)
 {
-    (void)sig;
-    write(1, "\n", 1);
-    rl_on_new_line();
-    rl_replace_line("", 0);
-    rl_redisplay();
+	(void)sig;
+	write(1, "\n", 1);
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
 }
 
-void set_sigint(void)
+void	set_sigint(void)
 {
-    struct sigaction sa;
+	struct sigaction	sa;
 
-    ft_memset(&sa, 0, sizeof(sa));
-    sigemptyset(&sa.sa_mask);
-    sa.sa_flags = 0;
-    sa.sa_handler = sigint_handler;
-    sigaction(SIGINT, &sa, NULL);
+	ft_memset(&sa, 0, sizeof(sa));
+	sigemptyset(&sa.sa_mask);
+	sa.sa_flags = 0;
+	sa.sa_handler = sigint_handler;
+	sigaction(SIGINT, &sa, NULL);
 }
 
-void    setup_signals(void)
+void	setup_signals(void)
 {
-    set_sigint();
-    signal(SIGQUIT, SIG_IGN);
+	set_sigint();
+	signal(SIGQUIT, SIG_IGN);
 }

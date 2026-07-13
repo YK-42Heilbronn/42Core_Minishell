@@ -3,72 +3,85 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ileongar <ileongar@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/11 00:02:15 by ileongar          #+#    #+#             */
-/*   Updated: 2026/07/13 11:05:30 by ykonka           ###   ########.fr       */
+/*   Updated: 2026/07/13 17:32:13 by ileongar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
 #include "minishell.h"
+#include "parser.h"
 
-void free_env_list(t_env *env)
+void	free_env_list(t_env *env)
 {
-    t_env   *tmp;
+	t_env	*tmp;
 
-    while(env)
-    {
-        tmp = env->next;
-        free(env->key);
-        free(env->value);
-        free(env);
-        env = tmp;
-    }
+	while (env)
+	{
+		tmp = env->next;
+		free(env->key);
+		free(env->value);
+		free(env);
+		env = tmp;
+	}
 }
 
-t_env    *new_env_node(const char *line)
+t_env	*new_env_node(const char *line)
 {
-    t_env   *node;
-    char    *equal;
-    char    *key;
-    char    *value;
+	t_env	*node;
+	char	*equal;
+	char	*key;
+	char	*value;
 
-    node = malloc(sizeof(t_env));
-    if (!node)
-        return (NULL);
-    equal = ft_strchr(line, '=');
-    if (equal)
-    {
-        key = ft_substr(line, 0, equal - line);
-        value = ft_strdup(equal + 1);
-    }
-    else
-    {
-        key = ft_strdup(line);
-        value = ft_strdup("");
-    }
-    if (!key || !value)
-        return (free(key), free(value), free(node), NULL);
-    node->key = key;
-    node->value = value;
-    node->next = NULL;
-    return (node);
+	node = malloc(sizeof(t_env));
+	if (!node)
+		return (NULL);
+	equal = ft_strchr(line, '=');
+	if (equal)
+	{
+		key = ft_substr(line, 0, equal - line);
+		value = ft_strdup(equal + 1);
+	}
+	else
+	{
+		key = ft_strdup(line);
+		value = ft_strdup("");
+	}
+	if (!key || !value)
+		return (free(key), free(value), free(node), NULL);
+	node->key = key;
+	node->value = value;
+	node->next = NULL;
+	return (node);
 }
 
-void add_env_back(t_env **env, t_env *new_node)
+void	add_env_back(t_env **env, t_env *new_node)
 {
-    t_env   *current;
+	t_env	*current;
 
-    if (!*env)
-    {
-        *env = new_node;
-        return ;
-    }
-    current = *env;
-    while (current->next)
-        current = current->next;
-    current->next = new_node;
+	if (!*env)
+	{
+		*env = new_node;
+		return ;
+	}
+	current = *env;
+	while (current->next)
+		current = current->next;
+	current->next = new_node;
+}
+
+int	cmd_count(t_cmd *cmds)
+{
+	int	n;
+
+	n = 0;
+	while (cmds)
+	{
+		n++;
+		cmds = cmds->next;
+	}
+	return (n);
 }
 
 // static void	cmd_add_back(t_cmd **list, t_cmd *new_cmd)

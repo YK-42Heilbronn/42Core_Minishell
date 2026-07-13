@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ileongar <ileongar@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/07 17:29:48 by ykonka            #+#    #+#             */
-/*   Updated: 2026/07/13 11:03:54 by ykonka           ###   ########.fr       */
+/*   Updated: 2026/07/13 17:32:32 by ileongar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,13 @@
 # include <unistd.h>
 
 typedef struct s_redir	t_redir;
+
+typedef struct s_pipe
+{
+	int					stdin_fd;
+	int					pipefd[2];
+	pid_t				last_pid;
+}						t_pipe;
 
 // // @Comment: Linkedlist
 // typedef struct s_cmd
@@ -65,18 +72,26 @@ int						exec_builtin(t_shell *shell, t_cmd *cmd);
 
 // executor/utils_path.c
 char					*cmd_path_resolution(t_shell *shell, char *cmd);
-
-// executor/utils.c
-int						cmd_count(t_cmd *cmds);
+char					*get_path_env(t_env *env);
+char					*find_cmd_in_path(char **dirs, char *cmd);
 
 // executor/exec_child.c
-int						execute_child(t_shell *shell, t_cmd *cmd, int stdin_fd,
-							int stdout_fd);
+int						run_child_process(t_shell *shell, t_cmd *cmd,
+							int stdin_fd, int stdout_fd);
+void					child_exec(t_shell *shell, t_cmd *cur, int stdin_fd,
+							int pipefd[2]);
 
 // executor/exec_pipeline.c
 int						execute_pipeline(t_shell *shell, t_cmd *cmds);
 
 // executor/exec.c
 int						execute_shell(t_shell *shell);
+
+// executor/redirections.c
+int						open_redir_fd(t_shell *shell, t_redir *r);
+int						apply_input_redir(t_redir *r, int fd);
+int						apply_output_redir(int fd);
+int						apply_one_redir(t_shell *shell, t_redir *r);
+int						apply_redirs(t_shell *shell, t_cmd *cmd, int is_child);
 
 #endif

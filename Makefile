@@ -37,6 +37,7 @@ SRCS                = src/1_lexer/lexer.c \
                       src/5_executor/exec_child.c \
                       src/5_executor/exec_pipeline.c \
                       src/5_executor/exec.c \
+                      src/5_executor/redirections.c \
                       src/5_executor/utils_path.c \
                       src/5_executor/utils.c \
                       src/6_builtins/cd.c \
