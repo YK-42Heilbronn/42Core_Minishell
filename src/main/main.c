@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ileongar <ileongar@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/08 21:00:22 by ileongar          #+#    #+#             */
-/*   Updated: 2026/07/13 18:36:26 by ileongar         ###   ########.fr       */
+/*   Updated: 2026/07/13 19:56:24 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,50 +29,6 @@ int	main(int argc, char **argv, char **envp)
 	return (shell.last_status);
 }
 
-// static int shell_loop(t_shell *shell)
-// {
-//     while(1)
-//     {
-//         shell->line = readline("minishell$ ");
-//         if (!shell->line)
-//         {
-//             write(1, "exit\n", 5);
-//             break ;
-//         }
-//         if (shell->line[0] != '\0')
-//             add_history(shell->line);
-//         if(process_line(shell) == -1)
-//         {
-//             free(shell->line);
-//             shell->line = NULL;
-//             continue ;
-//         }
-//         free(shell->line);
-//         shell->line = NULL;
-//         cleanup_command(shell);
-//     }
-//     return(0);
-// }
-
-// static int	shell_loop(t_shell *shell)
-// {
-// 	while (1)
-// 	{
-// 		shell->line = readline("minishell$ ");
-// 		if (shell->line == NULL)
-// 		{
-// 			write(1, "exit\n", 5);
-// 			break ;
-// 		}
-// 		if (shell->line[0] != '\0')
-// 			add_history(shell->line);
-// 		process_line(shell);
-// 		free(shell->line);
-// 		shell->line = NULL;
-// 	}
-// 	return (shell->last_status);
-// }
-
 static int shell_loop(t_shell *shell)
 {
     while (1)
@@ -85,7 +41,7 @@ static int shell_loop(t_shell *shell)
         }
         if (shell->line[0] != '\0')
             add_history(shell->line);
-        if (process_line(shell) == -1)
+        if(process_line(shell) == -1)
         {
             free(shell->line);
             shell->line = NULL;
@@ -95,7 +51,7 @@ static int shell_loop(t_shell *shell)
         shell->line = NULL;
         if (shell->exit_flag)
             break;
-        // cleanup_command(shell);
+        cleanup_command(shell);
     }
     return (0);
 }

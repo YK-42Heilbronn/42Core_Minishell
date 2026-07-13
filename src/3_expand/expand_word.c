@@ -6,7 +6,7 @@
 /*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/11 17:56:07 by ykonka            #+#    #+#             */
-/*   Updated: 2026/07/13 05:17:28 by ykonka           ###   ########.fr       */
+/*   Updated: 2026/07/13 19:00:43 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,20 @@ static int	append_exit_status(char **result, t_shell *shell, int *i)
     return (1);
 }
 
+void print_env(t_shell *shell)
+{
+    t_env *next;
+
+    next = shell->env;
+    if (!next)
+        printf("env:null\n");
+    while (next)
+    {
+        printf("key:%s|value:%s\n", next->key, next->value);
+        next = next->next;
+    }
+}
+
 static int	append_env_var(char **result, const char *word, t_shell *shell, int *i)
 {
     char	*name;
@@ -49,6 +63,9 @@ static int	append_env_var(char **result, const char *word, t_shell *shell, int *
     if (!name)
         return (0);
     value = env_get_value(shell->env, name);
+    // print_env(shell);
+    // printf("name:%s\n", name);
+    // printf("value:%s\n", value);
     free(name);
     if (value)
         *result = str_append_str(*result, value);
@@ -57,6 +74,7 @@ static int	append_env_var(char **result, const char *word, t_shell *shell, int *
     if (!*result)
         return (0);
     *i += len + 1;
+    // printf("re::%s\n", *result);
     return (1);
 }
 
@@ -72,29 +90,86 @@ static int	handle_dollar(char **result, const char *word, t_shell *shell, int *i
     return (append_char_at(result, word, i));
 }
 
+/*
+Behavior::
+If sq == 1, return ft_strdup(word) with no expansion.
+If not single-quoted:
+	copy normal chars as-is
+	when seeing $?, replace with expand_exit_status(shell)
+	when seeing $ followed by valid var start, extract var name and replace using env_get_value(shell->env, key)
+	if variable does not exist, append empty string
+	if $ is followed by invalid char or end of string, copy $ literally
+dq does not block expansion; it only matters because double quotes allow $ expansion while single quotes do not
+*/
+// sq = single quoted, dq = double quoted
+// all the shell variables(session_custom+user+system) are added to ENV, can be extracted from the env_linked_list
+// expansion only starts if there is an $ sign
+// expansion rules:
+// single quotes: no expansion
+// double quotes: expansion takes place
+// char	*expand_word(const char *word, t_shell *shell, int sq, int dq)
+// {
+//     char	*result;
+//     int		i;
+
+//     (void)dq;
+//     if (!word)
+//         return (ft_strdup(""));
+//     word = ft_strtrim(word, "\"");
+//     if (sq)
+//         return (ft_strdup(word));
+//     result = malloc(1);
+//     if (!result)
+//         return (NULL);
+//     result[0] = '\0';
+//     i = 0;
+//     printf("%s-%zu\n", word, ft_strlen(word));
+//     while (word[i])
+//     {
+//         if (word[i] == '$')
+//         {
+//             if (!handle_dollar(&result, word, shell, &i))
+//                 return (free(result), NULL);
+//         }
+//         else if (!append_char_at(&result, word, &i))
+//             return (free(result), NULL);
+//         printf("result:%s,%d\n", result, i);
+//     }
+//     return (result);
+// }
+
 char	*expand_word(const char *word, t_shell *shell, int sq, int dq)
 {
     char	*result;
     int		i;
 
-    (void)dq;
     if (!word)
-        return (NULL);
-    if (sq)
-        return (ft_strdup(word));
-    result = malloc(1);
+        return (ft_strdup(""));
+    result = ft_strdup("");
     if (!result)
         return (NULL);
-    result[0] = '\0';
     i = 0;
     while (word[i])
     {
-        if (word[i] == '$')
+        if (word[i] == '\'' && !dq)
+        {
+            sq = !sq;
+            i++;
+            continue;
+        }
+        if (word[i] == '"' && !sq)
+        {
+            dq = !dq;
+            i++;
+            continue;
+        }
+        if (word[i] == '$' && !sq)
         {
             if (!handle_dollar(&result, word, shell, &i))
                 return (free(result), NULL);
+            continue;
         }
-        else if (!append_char_at(&result, word, &i))
+        if (!append_char_at(&result, word, &i))
             return (free(result), NULL);
     }
     return (result);

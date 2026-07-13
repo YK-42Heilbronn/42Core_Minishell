@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_line.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ileongar <ileongar@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/08 21:17:23 by ileongar          #+#    #+#             */
-/*   Updated: 2026/07/13 18:31:42 by ileongar         ###   ########.fr       */
+/*   Updated: 2026/07/13 19:49:51 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,7 @@
 
 int	process_line(t_shell *shell)
 {
-	if (!shell || !shell->line)
-		return (-1);
-	shell->tokens = lex_input(shell->line, shell);
-	if (!shell->tokens)
-		return (shell->last_status = -1, -1);
-	if (syntax_check_tokens(shell->tokens))
-		return (shell->last_status = -1, -1);
-	shell->cmds = parse_tokens(shell->tokens, shell);
-	if (!shell->cmds)
-		return (shell->last_status = -1, -1);
-	// process_input(shell->line, shell);
-	shell->last_status = execute_shell(shell);
-	return (0);
+	process_input(shell->line, shell);
+    shell->last_status = execute_shell(shell);
+    return (shell->last_status);
 }

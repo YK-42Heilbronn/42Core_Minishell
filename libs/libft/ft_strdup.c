@@ -6,7 +6,7 @@
 /*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 17:14:10 by ykonka            #+#    #+#             */
-/*   Updated: 2026/02/09 13:31:05 by ykonka           ###   ########.fr       */
+/*   Updated: 2026/07/13 17:26:22 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,21 @@
 
 char	*ft_strdup(const char *s1)
 {
-	char	*s1_cpy;
-	char	*tmp;
+    char	*copy;
+    size_t	i;
+    size_t	len;
 
-	if (!*s1)
-		return (NULL);
-	s1_cpy = malloc(sizeof(char) * (ft_strlen(s1) + 1));
-	tmp = s1_cpy;
-	if (s1_cpy != NULL)
-	{
-		while (*s1)
-		{
-			*s1_cpy = *s1;
-			s1++;
-			s1_cpy++;
-		}
-		*s1_cpy = '\0';
-		return (tmp);
-	}
-	else
-	{
-		return (NULL);
-	}
+    if (!s1)
+        return (NULL);
+    len = ft_strlen(s1);
+    copy = malloc(len + 1);
+    if (!copy)
+        return (NULL);
+    i = 0;
+    while (i <= len)
+    {
+        copy[i] = s1[i];
+        i++;
+    }
+    return (copy);
 }

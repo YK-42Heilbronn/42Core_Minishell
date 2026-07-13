@@ -6,7 +6,7 @@
 /*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/07 17:29:32 by ykonka            #+#    #+#             */
-/*   Updated: 2026/07/13 10:32:12 by ykonka           ###   ########.fr       */
+/*   Updated: 2026/07/13 19:31:17 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@
 # include "parser.h"
 
 /* src/env/env_init.c */
-int		env_init(t_shell *shell, char **envp);
 t_env	*env_new_node(const char *key, const char *value);
 void	env_add_back(t_env **env, t_env *new_node);
+int		env_init(t_shell *shell, char **envp);
 t_env	*split_envp_value(char *env_value);
 void	free_env(t_env **sh_env);
 
@@ -45,6 +45,7 @@ char	*str_append_str(char *src, const char *suffix);
 char	*expand_exit_status(t_shell *shell);
 
 // src/expand/expand_word.c
+void	print_env(t_shell *shell);
 char	*expand_word(const char *word, t_shell *shell, int sq, int dq);
 
 // src/expand/expand.c
