@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ileongar <ileongar@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/11 00:02:15 by ileongar          #+#    #+#             */
-/*   Updated: 2026/07/12 19:17:09 by ileongar         ###   ########.fr       */
+/*   Updated: 2026/07/13 11:05:30 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 void free_env_list(t_env *env)
 {
     t_env   *tmp;
-    
+
     while(env)
     {
         tmp = env->next;
@@ -59,7 +59,7 @@ t_env    *new_env_node(const char *line)
 void add_env_back(t_env **env, t_env *new_node)
 {
     t_env   *current;
-    
+
     if (!*env)
     {
         *env = new_node;
@@ -71,19 +71,19 @@ void add_env_back(t_env **env, t_env *new_node)
     current->next = new_node;
 }
 
-static void	cmd_add_back(t_cmd **list, t_cmd *new_cmd)
-{
-	t_cmd	*last;
+// static void	cmd_add_back(t_cmd **list, t_cmd *new_cmd)
+// {
+// 	t_cmd	*last;
 
-	if (!list || !new_cmd)
-		return ;
-	if (!*list)
-	{
-		*list = new_cmd;
-		return ;
-	}
-	last = *list;
-	while (last->next)
-		last = last->next;
-	last->next = new_cmd;
-}
+// 	if (!list || !new_cmd)
+// 		return ;
+// 	if (!*list)
+// 	{
+// 		*list = new_cmd;
+// 		return ;
+// 	}
+// 	last = *list;
+// 	while (last->next)
+// 		last = last->next;
+// 	last->next = new_cmd;
+// }

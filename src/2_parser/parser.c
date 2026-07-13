@@ -6,13 +6,14 @@
 /*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/09 14:51:18 by ykonka            #+#    #+#             */
-/*   Updated: 2026/07/13 06:39:50 by ykonka           ###   ########.fr       */
+/*   Updated: 2026/07/13 14:44:12 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 #include "lexer.h"
 #include "expander.h"
+#include "minishell.h"
 
 static void	cmd_add_back(t_cmd **list, t_cmd *new_cmd)
 {
@@ -78,24 +79,24 @@ t_cmd	*parse_tokens(t_token *tokens, t_shell *shell)
 //  -> shell->cmds
 int	process_input(char *line, t_shell *shell)
 {
-	t_token *lexed_tokens;
-	t_cmd *parsed_cmd;
-
 	if (!line || !shell)
-		return (1);
+		return (shell->last_status=1, -1);
 	if (has_unclosed_quotes(line))
-		return (print_syntax_error("unclosed quotes"), 1);
-	lexed_tokens = lex_input(line, shell);
-	if (lexed_tokens == NULL)
-		return (1);
-	if (syntax_check_tokens(lexed_tokens))
-		return (free_tokens(lexed_tokens), 1);
-	if (expand_tokens(lexed_tokens, shell))
-		return (free_tokens(lexed_tokens), 1);
-	parsed_cmd = parse_tokens(lexed_tokens, shell);
-	free_tokens(lexed_tokens);
-	if (!parsed_cmd)
-		return (1);
-	shell->cmds = parsed_cmd;
+		return (print_syntax_error("minishell: unclosed quotes"), shell->last_status=1, -1);
+	if (shell->tokens)
+		free_tokens(shell->tokens);
+	shell->tokens = lex_input(line, shell);
+	if (shell->tokens == NULL)
+		return (shell->last_status=1, -1);
+	if (syntax_check_tokens(shell->tokens))
+		return (free_tokens(shell->tokens), shell->last_status=1, -1);
+	if (expand_tokens(shell->tokens, shell))
+		return (free_tokens(shell->tokens), shell->last_status=1, -1);
+	if (shell->cmds)
+		free_cmds(shell->cmds);
+	shell->cmds = parse_tokens(shell->tokens, shell);
+	// free_tokens(shell->tokens);
+	if (!shell->cmds)
+		return (shell->last_status=1, -1);
 	return (0);
 }

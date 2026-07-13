@@ -3,25 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ileongar <ileongar@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/08 21:17:27 by ileongar          #+#    #+#             */
-/*   Updated: 2026/07/11 00:47:02 by ileongar         ###   ########.fr       */
+/*   Updated: 2026/07/13 12:17:23 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 #include "minishell.h"
+#include "expander.h"
 
 void    init_shell(t_shell *shell, char **envp)
 {
+    ft_memset(shell, 0, sizeof(t_shell));
     shell->last_status = 0;
     shell->line = NULL;
     shell->tokens = NULL;
     shell->cmds = NULL;
     shell->env = dup_env(envp);
     if(!shell->env)
-        exit(1);
+    {
+        shell->last_status = 1;
+        return ;
+    }
     lvl_up(shell);
 }
 
@@ -37,13 +42,13 @@ t_env   *dup_env(char **envp)
     i = 0;
     while(envp[i])
     {
-        node = new_env_node(envp[i]);
+        node = split_envp_value(envp[i]);
         if (!node)
         {
-            free_env_list(env);
+            free_env(&env);
             return (NULL);
         }
-        add_env_back(&env, node);
+        env_add_back(&env, node);
         i++;
     }
     return(env);
@@ -55,13 +60,13 @@ void lvl_up(t_shell *shell)
     int     level;
     char    *new_value;
 
-    node = get_env_value(shell->env, "SHLVL");
+    node = env_get_node(shell->env, "SHLVL");
     if (!node)
     {
-        node = new_env_node("SHLVL = 1");
+        node = env_new_node("SHLVL", "1");
         if (!node)
             return ;
-        add_env_back(&shell->env, node);
+        env_add_back(&shell->env, node);
         return ;
     }
     level = ft_atoi(node->value);

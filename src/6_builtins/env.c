@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ileongar <ileongar@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/10 23:43:20 by ileongar          #+#    #+#             */
-/*   Updated: 2026/07/13 00:28:56 by ileongar         ###   ########.fr       */
+/*   Updated: 2026/07/13 08:14:22 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "parser.h"
 
 int	builtin_env(t_shell *shell)
 {

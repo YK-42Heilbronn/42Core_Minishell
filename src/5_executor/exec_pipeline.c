@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipeline.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ileongar <ileongar@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/11 17:21:38 by ileongar          #+#    #+#             */
-/*   Updated: 2026/07/12 23:37:27 by ileongar         ###   ########.fr       */
+/*   Updated: 2026/07/13 09:47:42 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,13 +58,13 @@ int execute_pipeline(t_shell *shell, t_cmd *cmds)
             return (perror("pipe"), 1);
         pid = fork();
         if (pid < 0)
-            return(perror(fork), 1),
+            return(perror(strerror(pid)), 1);
         if (pid == 0)
         {
             signal(SIGINT, SIG_DFL);
-            signal(SIGOUT, SIG_DFL);
+            signal(SIGQUIT, SIG_DFL);
             if (cur->next)
-                execute_child(shell, cur, stdin_fd, pipefd[2]);
+                execute_child(shell, cur, stdin_fd, pipefd[0]);
             execute_child(shell, cur, stdin_fd, STDOUT_FILENO);
         }
         if(last_pid == -1)
@@ -74,9 +74,9 @@ int execute_pipeline(t_shell *shell, t_cmd *cmds)
         if (cur->next)
         {
             close(pipefd[1]);
-            stdin_fd = pipefd[2];
+            stdin_fd = pipefd[0];
         }
         cur = cur->next;
     }
-    return(wait_pipeline(wait_pipeline, shell));
+    return(wait_pipeline(last_pid, shell));
 }

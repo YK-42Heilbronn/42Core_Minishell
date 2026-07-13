@@ -3,18 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ileongar <ileongar@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/12 17:39:34 by ileongar          #+#    #+#             */
-/*   Updated: 2026/07/12 23:49:16 by ileongar         ###   ########.fr       */
+/*   Updated: 2026/07/13 08:17:19 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "parser.h"
 
-int builtin_pwd(void)
+int builtin_pwd(t_cmd *cmd)
 {
     char    *pwd;
+    (void)cmd;
 
     pwd = getcwd(NULL, 0);
     if (pwd == NULL)

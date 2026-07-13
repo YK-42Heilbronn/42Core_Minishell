@@ -6,11 +6,29 @@
 /*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/10 16:01:29 by ykonka            #+#    #+#             */
-/*   Updated: 2026/07/12 21:48:57 by ykonka           ###   ########.fr       */
+/*   Updated: 2026/07/13 10:31:54 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expander.h"
+
+t_env	*env_get_node(t_env *env, const char *key)
+{
+	t_env *env_node;
+
+	if (!env || !key)
+		return (NULL);
+	env_node = env;
+	while (env_node)
+	{
+		if(env_node->key
+		   && ft_strlen(env_node->key) == ft_strlen(key)
+		   && ft_strncmp(env_node->key, key, ft_strlen(key)+1) == 0)
+		   return (env_node);
+		env_node = env_node->next;
+	}
+	return (NULL);
+}
 
 /*
 Behavior

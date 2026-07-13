@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleanup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ileongar <ileongar@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/08 21:17:17 by ileongar          #+#    #+#             */
-/*   Updated: 2026/07/11 16:42:45 by ileongar         ###   ########.fr       */
+/*   Updated: 2026/07/13 10:57:37 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@
 void free_redirs(t_redir *redirs)
 {
     t_redir *next;
-    
+
     while (redirs)
     {
-        next = redits->next;
+        next = redirs->next;
         free(redirs);
         redirs = next;
     }
@@ -28,7 +28,7 @@ void free_redirs(t_redir *redirs)
 void    free_cmds(t_cmd *cmd)
 {
     t_cmd   *next;
-    
+
     while (cmd)
     {
         next = cmd->next;

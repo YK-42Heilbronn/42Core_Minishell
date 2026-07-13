@@ -3,21 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ileongar <ileongar@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/12 20:26:11 by ileongar          #+#    #+#             */
-/*   Updated: 2026/07/12 23:49:08 by ileongar         ###   ########.fr       */
+/*   Updated: 2026/07/13 09:57:40 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "parser.h"
+#include "expander.h"
 
 //TODO: why export_one?
 
 //Short explanation:
 //export with no argc: print env in declare -x style or simple KEY=VALUE
 //export KEY=VALUE: add/update enviroment
-//ignore invalid identifiers 
+//ignore invalid identifiers
 
 int is_valid_identifier(const char *s)
 {
@@ -55,7 +57,7 @@ int export_one(t_shell *shell, const char *arg)
         return (export_error_print(arg));
     eq = ft_strchr(arg, '=');
     if (!eq)
-        return (set_env_value(&shell->env, arg, get_env_value(shell->env, arg)));
+        return (env_set_value(&shell->env, arg, env_get_value(shell->env, arg)));
     key = ft_substr(arg, 0, eq - arg);
     value = ft_strdup(eq + 1);
     if (!key || !value)
@@ -64,7 +66,7 @@ int export_one(t_shell *shell, const char *arg)
         free(value);
         return (1);
     }
-    set_env_value(&shell->env, key, value);
+    env_set_value(&shell->env, key, value);
     free(key);
     free(value);
     return (0);
@@ -83,7 +85,7 @@ int export_env_print(t_shell *shell)
         {
             write(1, "=\"", 2);
             write(1, env->value, ft_strlen(env->value));
-            write(1, "\"");
+            write(1, "\"", 1);
         }
         write(1, "\n", 2);
         env = env->next;

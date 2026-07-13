@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ileongar <ileongar@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/08 21:17:30 by ileongar          #+#    #+#             */
-/*   Updated: 2026/07/10 21:48:13 by ileongar         ###   ########.fr       */
+/*   Updated: 2026/07/13 10:55:32 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,14 @@ void sigint_handler(int sig)
     rl_redisplay();
 }
 
-void    set_sigint(void)
+void set_sigint(void)
 {
-    struct sigaction    sa;
+    struct sigaction sa;
 
     ft_memset(&sa, 0, sizeof(sa));
-    sigemptyset(&sa->sa_mask);
-    sa->sa_flags = 0;
-    sa->sa_handler = sigint_handler;
+    sigemptyset(&sa.sa_mask);
+    sa.sa_flags = 0;
+    sa.sa_handler = sigint_handler;
     sigaction(SIGINT, &sa, NULL);
 }
 

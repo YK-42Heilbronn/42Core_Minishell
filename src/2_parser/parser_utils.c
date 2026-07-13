@@ -1,16 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   quote_check.c                                      :+:      :+:    :+:   */
+/*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/08 13:14:36 by ykonka            #+#    #+#             */
-/*   Updated: 2026/07/09 17:20:14 by ykonka           ###   ########.fr       */
+/*   Updated: 2026/07/13 14:43:39 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
+#include "minishell.h"
 
 int	has_unclosed_quotes(const char *line)
 {
@@ -27,6 +28,20 @@ int	has_unclosed_quotes(const char *line)
 	}
 	return (quote != 0);
 }
+
+// void free_cmds(t_cmd *cmd)
+// {
+// 	if (!cmd)
+// 		return;
+// 	if (cmd->argv)
+// 	{
+// 		for (int i = 0; cmd->argv[i]; i++)
+// 			free(cmd->argv[i]);
+// 		free(cmd->argv);
+// 	}
+// 	free_redirs(cmd->redirs);
+// 	free(cmd);
+// }
 
 // int	has_unclosed_quotes(const char *line)
 // {

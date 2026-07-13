@@ -3,19 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   exec_child.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ileongar <ileongar@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/10 23:45:02 by ileongar          #+#    #+#             */
-/*   Updated: 2026/07/13 00:23:13 by ileongar         ###   ########.fr       */
+/*   Updated: 2026/07/13 09:37:45 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
+#include "parser.h"
+
+int open_redir_fd(t_shell *shell, t_redir *r);
+int apply_redirs(t_shell *shell, t_cmd *cmd, int is_child);
 
 int execute_child(t_shell *shell, t_cmd *cmd, int stdin_fd, int stdout_fd)
 {
     char *path;
-    
+
     if (stdin_fd != STDIN_FILENO)
     {
         dup2(stdin_fd, STDIN_FILENO);
@@ -43,21 +47,21 @@ int open_redir_fd(t_shell *shell, t_redir *r)
     if (r->type == R_HEREDOC)
         return (shell->heredoc_fd);
     if (r->type == R_IN)
-        return (open(r->file, 0_RDONLY));
+        return (open(r->file, O_RDONLY));
     if (r->type == R_OUT)
-        return (open(r->file, 0_WRONLY || 0_CREAT || 0_TRUNC, 0644));
+        return (open(r->file, O_WRONLY | O_CREAT | O_TRUNC, 0644));
     if (r->type == R_APPEND)
-        return (open(r->file, 0_WRONLY || 0_CREAT || 0_APPEND, 0644));
+        return (open(r->file, O_WRONLY | O_CREAT | O_APPEND, 0644));
     return (-1);
 }
 
-int apply_redirs(t_shell *shell, int is_child)
+int apply_redirs(t_shell *shell, t_cmd *cmd, int is_child)
 {
     t_redir *r;
     int     fd;
 
     (void)is_child;
-    if (!shell || !cmd)
+    if (!shell || cmd)
         return (1);
     r = cmd->redirs;
     while (r)
@@ -73,18 +77,18 @@ int apply_redirs(t_shell *shell, int is_child)
             if (dup2(fd, STDIN_FILENO) < 0)
             {
                 perror("dup2");
-                if (r->type != R_HEREDOC);
+                if (r->type != R_HEREDOC)
                     close(fd);
                 return (1);
             }
-            if (r->type != r_HEREDOC)
+            if (r->type != R_HEREDOC)
                 close(fd);
         }
         else
         {
             if (dup2(fd, STDOUT_FILENO) < 0)
             {
-                perror(dup2);
+                perror(strerror(dup2(fd, STDOUT_FILENO)));
                 close(fd);
                 return(1);
             }

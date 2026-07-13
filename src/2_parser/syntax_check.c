@@ -6,7 +6,7 @@
 /*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/09 16:56:06 by ykonka            #+#    #+#             */
-/*   Updated: 2026/07/09 17:46:45 by ykonka           ###   ########.fr       */
+/*   Updated: 2026/07/13 13:30:56 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int	redir_checks(t_token *token)
 
 	next = token->next;
 	if (!next)
-		return (print_syntax_error("newline"));
+		return (print_syntax_error("minishell: newline"));
 	if (next->type == TOK_PIPE)
 		return (print_syntax_error("|"));
 	if (is_redir_token(next->type))
@@ -49,7 +49,7 @@ static int	pipe_checks(t_token *token)
 
 	next = token->next;
 	if (!next)
-		return (print_syntax_error("newline"));
+		return (print_syntax_error("minishell: newline"));
 	if (next->type == TOK_PIPE)
 		return (print_syntax_error("|"));
 	return (0);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_builtins.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ileongar <ileongar@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/12 17:56:16 by ileongar          #+#    #+#             */
-/*   Updated: 2026/07/12 23:36:28 by ileongar         ###   ########.fr       */
+/*   Updated: 2026/07/13 08:24:28 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,32 @@
 
 int is_builtin(const char *cmd)
 {
-    return (cmd && (!ft_strcmp(cmd, "echo") || !ft_strcmp(cmd, "pwd")
-     || !ft_strcmp(cmd, "env") || !ft_strcmp(cmd, "cd")
-     || !ft_strcmp(cmd, "export") || !ft_strcmp(cmd, "unset")
-     || !ft_strcmp(cmd, "exit")))
+    return (cmd && (!ft_strncmp(cmd, "echo", ft_strlen("echo"))
+     || !ft_strncmp(cmd, "pwd", ft_strlen("pwd"))
+     || !ft_strncmp(cmd, "env", ft_strlen("env"))
+     || !ft_strncmp(cmd, "cd", ft_strlen("cd"))
+     || !ft_strncmp(cmd, "export", ft_strlen("export"))
+     || !ft_strncmp(cmd, "unset", ft_strlen("unset"))
+     || !ft_strncmp(cmd, "exit", ft_strlen("exit"))));
 }
 
 int exec_builtin(t_shell *shell, t_cmd *cmd)
 {
     if (!cmd || !cmd->argv || !cmd->argv[0])
         return (1);
-    if (!ft_strcmp(cmd->argv[0], "echo"))
+    if (!ft_strncmp(cmd->argv[0], "echo", ft_strlen("echo")))
         return (builtin_echo(cmd));
-    if (!ft_strcmp(cmd->argv[0], "pwd"))
+    if (!ft_strncmp(cmd->argv[0], "pwd", ft_strlen("pwd")))
         return (builtin_pwd(cmd));
-    if (!ft_strcmp(cmd->argv[0], "env"))
-        return (builtin_env(cmd));
-    if (!ft_strcmp(cmd->argv[0], "cd"))
+    if (!ft_strncmp(cmd->argv[0], "env", ft_strlen("env")))
+        return (builtin_env(shell));
+    if (!ft_strncmp(cmd->argv[0], "cd", ft_strlen("cd")))
         return (builtin_cd(shell, cmd));
-    if (!ft_strcmp(cmd->argv[0], "export"))
+    if (!ft_strncmp(cmd->argv[0], "export", ft_strlen("export")))
         return (builtin_export(shell, cmd));
-    if (!ft_strcmp(cmd->argv[0], "unset"))
+    if (!ft_strncmp(cmd->argv[0], "unset", ft_strlen("unset")))
         return (builtin_unset(shell, cmd));
-    if (!ft_strcmp(cmd->argv[0], "exit"))
+    if (!ft_strncmp(cmd->argv[0], "exit", ft_strlen("exit")))
         return (builtin_exit(shell, cmd));
     return (1);
 }

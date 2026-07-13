@@ -6,7 +6,7 @@
 /*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/08 13:14:04 by ykonka            #+#    #+#             */
-/*   Updated: 2026/07/09 16:35:40 by ykonka           ###   ########.fr       */
+/*   Updated: 2026/07/13 13:22:55 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ static int	handle_word(t_token **tokens, const char *line, int i)
 	return (i + len);
 }
 
+// returns a linked list of tokens or NULL on error
 t_token	*lex_input(const char *line, t_shell *shell)
 {
 	t_token	*tokens;

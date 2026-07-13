@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ileongar <ileongar@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/12 23:35:15 by ileongar          #+#    #+#             */
-/*   Updated: 2026/07/13 00:48:27 by ileongar         ###   ########.fr       */
+/*   Updated: 2026/07/13 09:54:27 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "parser.h"
 
 // exit with no args: print exit, set shell->exit_flag, exit with shell->last_status
 // exit N: print exit, set exit status to N if numeric, else print error and exit with status 2. This is what the minishell subject expects for exit without options
@@ -22,7 +23,7 @@ int is_numeric(const char *s)
     if (!s || !*s)
         return (0);
     i = 0;
-    if (s[i] == "+" || s[i] == '-')
+    if (s[i] == '+' || s[i] == '-')
         i++;
     while  (s[i])
     {
@@ -59,7 +60,7 @@ long    ft_long(const char *s)
 int builtin_exit(t_shell *shell, t_cmd *cmd)
 {
     long    code;
-    
+
     write(1, "exit\n", 5);
     if(!cmd->argv[1])
     {

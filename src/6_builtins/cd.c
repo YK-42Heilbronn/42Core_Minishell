@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ileongar <ileongar@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/12 19:10:23 by ileongar          #+#    #+#             */
-/*   Updated: 2026/07/13 00:48:15 by ileongar         ###   ########.fr       */
+/*   Updated: 2026/07/13 09:51:09 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "parser.h"
 
 // TODO: rewrite set_env_value, get rid of ?
 // what id chdir
@@ -43,7 +44,7 @@ static void	set_value(t_env *node, const char *value)
 		free(node->value);
 	node->value = NULL;
 	if (value)
-		node->value + ft_strdup(value);
+		node->value = ft_strdup(value);
 }
 
 int	set_env_value(t_env **env, const char *key, const char *value)

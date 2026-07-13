@@ -6,7 +6,7 @@
 /*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/09 16:56:39 by ykonka            #+#    #+#             */
-/*   Updated: 2026/07/10 14:03:47 by ykonka           ###   ########.fr       */
+/*   Updated: 2026/07/13 14:42:59 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,19 @@ void	cmd_add_redir(t_cmd *cmd, t_redir *redir)
 		last = last->next;
 	last->next = redir;
 }
+
+// void free_redirs(t_redir *redirs)
+// {
+// 	t_redir	*tmp;
+
+// 	while (redirs)
+// 	{
+// 		tmp = redirs;
+// 		redirs = redirs->next;
+// 		free(tmp->file);
+// 		free(tmp);
+// 	}
+// }
 
 static t_redir_type	get_redir_type(t_token_type type)
 {

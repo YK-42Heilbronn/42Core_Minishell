@@ -6,7 +6,7 @@
 /*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/07 17:01:03 by ykonka            #+#    #+#             */
-/*   Updated: 2026/07/13 06:39:57 by ykonka           ###   ########.fr       */
+/*   Updated: 2026/07/13 14:43:45 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #ifndef PARSER_H
 # define PARSER_H
 # include "lexer.h"
+# include "libft.h"
 # include <stdio.h>
 # include <stdlib.h>
 
@@ -62,8 +63,9 @@ typedef struct s_shell
 	int				exit_flag;
 }					t_shell;
 
-// src/parser/quote_check.c
+// src/parser/parser_utils.c
 int					has_unclosed_quotes(const char *line);
+// void				free_cmds(t_cmd *cmd);
 
 // src/parser/syntax_check.c
 int					is_redir_token(t_token_type type);
@@ -84,6 +86,6 @@ int					cmd_add_arg(t_cmd *cmd, char *word);
 int					parse_redirection(t_cmd *cmd, t_token **tokens);
 t_redir				*new_redir(t_redir_type type, char *file);
 void				cmd_add_redir(t_cmd *cmd, t_redir *redir);
+// void				free_redirs(t_redir *redirs);
 
 #endif
-
