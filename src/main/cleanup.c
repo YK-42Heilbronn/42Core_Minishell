@@ -6,7 +6,7 @@
 /*   By: ileongar <ileongar@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/08 21:17:17 by ileongar          #+#    #+#             */
-/*   Updated: 2026/07/13 17:31:16 by ileongar         ###   ########.fr       */
+/*   Updated: 2026/07/14 23:31:43 by ileongar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	free_redirs(t_redir *redirs)
 	while (redirs)
 	{
 		next = redirs->next;
+		free(redirs->file);
 		free(redirs);
 		redirs = next;
 	}

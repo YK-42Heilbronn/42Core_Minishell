@@ -6,7 +6,7 @@
 /*   By: ileongar <ileongar@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/12 23:35:15 by ileongar          #+#    #+#             */
-/*   Updated: 2026/07/13 15:22:48 by ileongar         ###   ########.fr       */
+/*   Updated: 2026/07/14 23:28:06 by ileongar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int	builtin_exit(t_shell *shell, t_cmd *cmd)
 	}
 	if (cmd->argv[2])
 	{
-		write(2, "minishell: exit: too many agruments\n", 36);
+		write(2, "minishell: exit: too many arguments\n", 36);
 		return (1);
 	}
 	code = ft_long(cmd->argv[1]);

@@ -6,7 +6,7 @@
 /*   By: ileongar <ileongar@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/10 23:45:09 by ileongar          #+#    #+#             */
-/*   Updated: 2026/07/13 19:19:35 by ileongar         ###   ########.fr       */
+/*   Updated: 2026/07/15 00:17:23 by ileongar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,28 @@ char	*join_path(const char *dir, const char *cmd)
 	return (res);
 }
 
-char	*get_path_env(t_env *env)
+// char	*get_path_env(t_env *env)
+// {
+// 	while (env)
+// 	{
+// 		if (!ft_strncmp(env->key, "PATH", 5) && env->key[4] == '\0')
+// 			return (env->value);
+// 		env = env->next;
+// 	}
+// 	return (NULL);
+// }
+
+char    *get_path_env(t_env *env)
 {
-	while (env)
-	{
-		if (!ft_strncmp(env->key, "PATH", 5) && env->key[4] == '\0')
-			return (env->value);
-		env = env->next;
-	}
-	return (NULL);
+    while (env)
+    {
+        if (env->key
+            && ft_strlen(env->key) == 4
+            && ft_strncmp(env->key, "PATH", 4) == 0)
+            return (env->value);
+        env = env->next;
+    }
+    return (NULL);
 }
 
 char	*find_cmd_in_path(char **dirs, char *cmd)

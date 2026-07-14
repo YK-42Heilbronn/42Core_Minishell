@@ -6,7 +6,7 @@
 /*   By: ileongar <ileongar@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/11 17:21:38 by ileongar          #+#    #+#             */
-/*   Updated: 2026/07/13 19:20:08 by ileongar         ###   ########.fr       */
+/*   Updated: 2026/07/14 23:20:50 by ileongar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static int	run_pipeline_step(t_shell *shell, t_cmd *cur, t_pipe *ctx)
 		return (perror("pipe"), 1);
 	pid = fork();
 	if (pid < 0)
-		return (perror(strerror(pid)), 1);
+		return (perror("fork"), 1);
 	if (pid == 0)
 		child_exec(shell, cur, ctx->stdin_fd, pipefd);
 	if (ctx->last_pid == -1)

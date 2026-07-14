@@ -6,7 +6,7 @@
 /*   By: ileongar <ileongar@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/12 20:26:11 by ileongar          #+#    #+#             */
-/*   Updated: 2026/07/13 15:21:39 by ileongar         ###   ########.fr       */
+/*   Updated: 2026/07/14 23:21:26 by ileongar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	export_one(t_shell *shell, const char *arg)
 	char	*key;
 	char	*value;
 
-	if (is_valid_identifier(arg))
+	if (!is_valid_identifier(arg))
 		return (export_error_print(arg));
 	eq = ft_strchr(arg, '=');
 	if (!eq)

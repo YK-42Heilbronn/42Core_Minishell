@@ -6,7 +6,7 @@
 /*   By: ileongar <ileongar@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/10 23:45:02 by ileongar          #+#    #+#             */
-/*   Updated: 2026/07/13 22:53:28 by ileongar         ###   ########.fr       */
+/*   Updated: 2026/07/15 00:25:51 by ileongar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ int run_child_process(t_shell *shell, t_cmd *cmd, int stdin_fd, int stdout_fd)
     free_envp(envp);
     free(path);
     _exit(127);
+    return (0);
 }
 
 void	child_exec(t_shell *shell, t_cmd *cur, int stdin_fd, int pipefd[2])
@@ -86,5 +87,6 @@ void	child_exec(t_shell *shell, t_cmd *cur, int stdin_fd, int pipefd[2])
 	signal(SIGQUIT, SIG_DFL);
 	if (cur->next)
 		run_child_process(shell, cur, stdin_fd, pipefd[1]);
-	run_child_process(shell, cur, stdin_fd, STDOUT_FILENO);
+    else
+        run_child_process(shell, cur, stdin_fd, STDOUT_FILENO);
 }

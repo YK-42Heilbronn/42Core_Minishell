@@ -3,32 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ileongar <ileongar@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/08 21:17:27 by ileongar          #+#    #+#             */
-/*   Updated: 2026/07/13 19:48:46 by ykonka           ###   ########.fr       */
+/*   Updated: 2026/07/14 23:25:31 by ileongar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expander.h"
 #include "minishell.h"
 #include "parser.h"
-
-// void	init_shell(t_shell *shell, char **envp)
-// {
-// 	ft_memset(shell, 0, sizeof(t_shell));
-// 	shell->last_status = 0;
-// 	shell->line = NULL;
-// 	shell->tokens = NULL;
-// 	shell->cmds = NULL;
-// 	shell->env = dup_env(envp);
-// 	if (!shell->env)
-// 	{
-// 		shell->last_status = 1;
-// 		return ;
-// 	}
-// 	lvl_up(shell);
-// }
 
 void	init_shell(t_shell *shell, char **envp)
 {
@@ -80,7 +64,7 @@ void	lvl_up(t_shell *shell)
 	node = env_get_node(shell->env, "SHLVL");
 	if (!node)
 	{
-		node = env_new_node("SHLVL", "1");
+		node = env_new_node(ft_strdup("SHLVL"), ft_strdup("1"));
 		if (!node)
 			return ;
 		env_add_back(&shell->env, node);
