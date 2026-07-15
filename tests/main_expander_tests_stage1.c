@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main_expander_tests.c                              :+:      :+:    :+:   */
+/*   main_expander_tests_stage1.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/11 18:05:07 by ykonka            #+#    #+#             */
-/*   Updated: 2026/07/11 18:08:27 by ykonka           ###   ########.fr       */
+/*   Updated: 2026/07/15 01:22:01 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expander.h"
+#include "lexer.h"
 #include "minishell.h"
 #include "parser.h"
-#include "lexer.h"
 #include <stdio.h>
 
 static void	test_expand_word(t_shell *shell, char *input, int sq, int dq)
@@ -21,19 +21,19 @@ static void	test_expand_word(t_shell *shell, char *input, int sq, int dq)
 	char	*out;
 
 	out = expand_word(input, shell, sq, dq);
-	printf("in=[%s] sq=%d dq=%d out=[%s]\n",
-		input, sq, dq, out ? out : "NULL");
+	printf("in=[%s] sq=%d dq=%d out=[%s]\n", input, sq, dq, out ? out : "NULL");
 	free(out);
 }
 
-static void	test_one_token(t_shell *shell, char *value, int type, int sq, int dq)
+static void	test_one_token(t_shell *shell, char *value, int type, int sq,
+		int dq)
 {
 	t_token	token;
 
 	token.type = type;
 	token.value = ft_strdup(value);
-	token.quoted_single = sq;
-	token.quoted_double = dq;
+	token.s_quote = sq;
+	token.d_quote = dq;
 	token.next = NULL;
 	if (expand_one_token(&token, shell))
 		printf("token ok: [%s]\n", token.value);
@@ -95,7 +95,6 @@ int	main(void)
 	result = expand_word("$?", &shell, 0, 0);
 	printf("status = [%s]\n", result);
 	free(result);
-
 	test_expand_word(&shell, "hello", 0, 0);
 	test_expand_word(&shell, "$?", 0, 0);
 	test_expand_word(&shell, "$USER", 0, 0);
@@ -103,10 +102,8 @@ int	main(void)
 	test_expand_word(&shell, "abc$USER", 0, 0);
 	test_expand_word(&shell, "$NOT_SET", 0, 0);
 	test_expand_word(&shell, "$", 0, 0);
-
 	test_one_token(&shell, "$USER", TOK_WORD, 0, 0);
 	test_one_token(&shell, "$USER", TOK_WORD, 1, 0);
 	test_one_token(&shell, "|", TOK_PIPE, 0, 0);
-
 	return (0);
 }

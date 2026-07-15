@@ -6,12 +6,18 @@
 /*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/09 16:56:06 by ykonka            #+#    #+#             */
-/*   Updated: 2026/07/13 13:30:56 by ykonka           ###   ########.fr       */
+/*   Updated: 2026/07/15 21:52:05 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 #include "parser.h"
+
+int	print_syntax_error(char *token)
+{
+	printf("minishell: syntax error at token '%s'\n", token);
+	return (1);
+}
 
 int	is_redir_token(t_token_type type)
 {
@@ -21,19 +27,13 @@ int	is_redir_token(t_token_type type)
 	return (0);
 }
 
-int	print_syntax_error(char *token)
-{
-	printf("minishell: syntax error near unexpected token `%s'\n", token);
-	return (1);
-}
-
 static int	redir_checks(t_token *token)
 {
 	t_token	*next;
 
 	next = token->next;
 	if (!next)
-		return (print_syntax_error("minishell: newline"));
+		return (print_syntax_error("syntax error"));
 	if (next->type == TOK_PIPE)
 		return (print_syntax_error("|"));
 	if (is_redir_token(next->type))
@@ -49,7 +49,7 @@ static int	pipe_checks(t_token *token)
 
 	next = token->next;
 	if (!next)
-		return (print_syntax_error("minishell: newline"));
+		return (print_syntax_error("syntax error"));
 	if (next->type == TOK_PIPE)
 		return (print_syntax_error("|"));
 	return (0);

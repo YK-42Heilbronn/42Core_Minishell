@@ -6,7 +6,7 @@
 /*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/11 17:56:07 by ykonka            #+#    #+#             */
-/*   Updated: 2026/07/13 19:00:43 by ykonka           ###   ########.fr       */
+/*   Updated: 2026/07/15 23:05:10 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	append_exit_status(char **result, t_shell *shell, int *i)
 
     status = expand_exit_status(shell);
     if (!status)
-        return (0);
+        return (*result=NULL, 0);
     *result = str_append_str(*result, status);
     free(status);
     if (!*result)
@@ -138,7 +138,7 @@ dq does not block expansion; it only matters because double quotes allow $ expan
 //     return (result);
 // }
 
-char	*expand_word(const char *word, t_shell *shell, int sq, int dq)
+char	*expand_word(const char *word, t_shell *shell, int q_state)
 {
     char	*result;
     int		i;
@@ -151,19 +151,17 @@ char	*expand_word(const char *word, t_shell *shell, int sq, int dq)
     i = 0;
     while (word[i])
     {
-        if (word[i] == '\'' && !dq)
+        if (word[i] == '\'' && q_state == 1)
         {
-            sq = !sq;
             i++;
             continue;
         }
-        if (word[i] == '"' && !sq)
+        if (word[i] == '"' && q_state == 2)
         {
-            dq = !dq;
             i++;
             continue;
         }
-        if (word[i] == '$' && !sq)
+        if (word[i] == '$' && (q_state == 2 || q_state == 0))  // && q_state == 2
         {
             if (!handle_dollar(&result, word, shell, &i))
                 return (free(result), NULL);

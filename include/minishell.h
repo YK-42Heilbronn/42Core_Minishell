@@ -6,24 +6,33 @@
 /*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 16:22:02 by ykonka            #+#    #+#             */
-/*   Updated: 2026/07/13 19:43:16 by ykonka           ###   ########.fr       */
+/*   Updated: 2026/07/15 21:39:53 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
-# include "executor.h"
-# include "libft.h"
-# include "parser.h"
+
 # include <errno.h>
 # include <signal.h>
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>
 
+# include "libft.h"
+// # include "lexer.h"
+# include "parser.h"
+// # include "expander.h"
+// # include "executor.h"
+
 /* readline & history */
 # include <readline/history.h>
 # include <readline/readline.h>
+
+typedef struct s_token t_token;
+typedef struct s_cmd t_cmd;
+typedef struct s_env t_env;
+typedef struct s_redir t_redir;
 
 // main/init.c
 void	init_shell(t_shell *shell, char **envp);

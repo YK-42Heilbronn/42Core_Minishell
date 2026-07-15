@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token_create.c                                     :+:      :+:    :+:   */
+/*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/08 13:14:01 by ykonka            #+#    #+#             */
-/*   Updated: 2026/07/09 16:36:12 by ykonka           ###   ########.fr       */
+/*   Updated: 2026/07/15 22:11:28 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,7 @@ t_token	*new_token(t_token_type type, char *value)
 		return (NULL);
 	node->type = type;
 	node->value = value;
-	node->quoted_single = 0;
-	node->quoted_double = 0;
+	node->quoted = 0;
 	node->next = NULL;
 	return (node);
 }
@@ -44,4 +43,34 @@ void	add_token(t_token **tokens, t_token *new_tok)
 	while (tmp->next)
 		tmp = tmp->next;
 	tmp->next = new_tok;
+}
+
+void	free_tokens(t_token **list)
+{
+	t_token	*next;
+
+	while (*list)
+	{
+		next = (*list)->next;
+		free((*list)->value);
+		free(*list);
+		*list = next;
+	}
+	*list = NULL;
+}
+
+void update_quotes_state(t_token *token)
+{
+	char *v_first;
+	char *v_last;
+
+	v_first = token->value;
+	v_last = token->value;
+	while (*v_last)
+		v_last++;
+	v_last--;
+	if (*v_first == '\'' && *v_last == '\'')
+		token->quoted = 1;
+	else if (*v_first == '"' && *v_last == '"')
+		token->quoted = 2;
 }

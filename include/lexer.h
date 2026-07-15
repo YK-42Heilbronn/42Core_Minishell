@@ -6,7 +6,7 @@
 /*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/07 17:01:17 by ykonka            #+#    #+#             */
-/*   Updated: 2026/07/09 16:33:13 by ykonka           ###   ########.fr       */
+/*   Updated: 2026/07/15 22:12:21 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include "libft.h"
 # include "stdio.h"
 # include <stdlib.h>
+// # include "minishell.h"
 
 typedef struct s_shell	t_shell;
 
@@ -33,24 +34,25 @@ typedef enum e_token_type
 }						t_token_type;
 
 // @Comment: Linkedlist
+// quoted: {'no': 0, 'single': 1, 'double': 2}
 typedef struct s_token
 {
 	t_token_type		type;
 	char				*value;
-	int					quoted_single;
-	int					quoted_double;
+	int					quoted;
 	struct s_token		*next;
 }						t_token;
 
 // lexer.c
 t_token					*lex_input(const char *line, t_shell *shell);
 
-// token_create.c
+// token.c
 t_token					*new_token(t_token_type type, char *value);
 void					add_token(t_token **list, t_token *new_tok);
+void					update_quotes_state(t_token *token);
 
 // lexer_utils.c
-void					free_tokens(t_token *list);
+void					free_tokens(t_token **list);
 int						append_token_dup(t_token **tokens, t_token_type type,
 							char *value);
 int						append_token_owned(t_token **tokens, t_token_type type,

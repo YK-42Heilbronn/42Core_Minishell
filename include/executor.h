@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ileongar <ileongar@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/07 17:29:48 by ykonka            #+#    #+#             */
-/*   Updated: 2026/07/13 18:24:24 by ileongar         ###   ########.fr       */
+/*   Updated: 2026/07/15 21:45:27 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 #ifndef EXECUTOR_H
 # define EXECUTOR_H
 
-# include "libft.h"
-# include "parser.h"
 # include <fcntl.h>
 # include <signal.h>
 # include <stdio.h>
@@ -25,8 +23,15 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <unistd.h>
+# include "libft.h"
+
+# include "parser.h"
+# include "minishell.h"
 
 typedef struct s_redir	t_redir;
+typedef struct s_shell t_shell;
+typedef struct s_cmd t_cmd;
+typedef struct s_env t_env;
 
 typedef struct s_pipe
 {

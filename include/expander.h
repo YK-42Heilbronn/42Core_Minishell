@@ -6,7 +6,7 @@
 /*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/07 17:29:32 by ykonka            #+#    #+#             */
-/*   Updated: 2026/07/13 19:31:17 by ykonka           ###   ########.fr       */
+/*   Updated: 2026/07/15 20:25:30 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,9 @@
 # define EXPAND_H
 # include "libft.h"
 # include "parser.h"
+// # include "minishell.h"
+
+typedef struct s_env t_env;
 
 /* src/env/env_init.c */
 t_env	*env_new_node(const char *key, const char *value);
@@ -46,7 +49,7 @@ char	*expand_exit_status(t_shell *shell);
 
 // src/expand/expand_word.c
 void	print_env(t_shell *shell);
-char	*expand_word(const char *word, t_shell *shell, int sq, int dq);
+char	*expand_word(const char *word, t_shell *shell, int q_state);
 
 // src/expand/expand.c
 int		expand_one_token(t_token *token, t_shell *shell);

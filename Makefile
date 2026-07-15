@@ -4,6 +4,7 @@ TEST_NAME_PARSER_ST1= parser_tests_stage1
 TEST_NAME_PARSER_ST2= parser_tests_stage2
 TEST_NAME_EXPANDER  = expander_tests
 TEST_NAME_ENV       = env_tests
+TEST_NAME_INPUT = test_process_input
 
 CC                  = cc
 CFLAGS              = -Wall -Wextra -Werror
@@ -18,7 +19,7 @@ INCLUDES            = -I$(INCDIR) -I$(LIBFT_DIR)
 LIBS                = -lreadline
 
 SRCS                = src/1_lexer/lexer.c \
-                      src/1_lexer/token_create.c \
+                      src/1_lexer/token.c \
                       src/1_lexer/lexer_utils.c \
                       src/1_lexer/token_utils.c \
                       src/2_parser/parser_utils.c \
@@ -59,6 +60,7 @@ TEST_SRCS_PARSER_ST1= tests/main_parser_tests_stage1.c
 TEST_SRCS_PARSER_ST2= tests/main_parser_tests_stage2.c
 TEST_SRCS_EXPANDER  = tests/main_expander_tests.c
 TEST_SRCS_ENV       = tests/main_env_tests.c
+TEST_SRCS_INPUT = tests/main_process_input_tests.c
 
 OBJS                = $(SRCS:%.c=$(OBJDIR)/%.o)
 MAIN_OBJS           = $(MAIN_SRCS:%.c=$(OBJDIR)/%.o)
@@ -67,6 +69,7 @@ TEST_OBJS_PARSER_ST1= $(TEST_SRCS_PARSER_ST1:%.c=$(OBJDIR)/%.o)
 TEST_OBJS_PARSER_ST2= $(TEST_SRCS_PARSER_ST2:%.c=$(OBJDIR)/%.o)
 TEST_OBJS_EXPANDER  = $(TEST_SRCS_EXPANDER:%.c=$(OBJDIR)/%.o)
 TEST_OBJS_ENV       = $(TEST_SRCS_ENV:%.c=$(OBJDIR)/%.o)
+TEST_OBJS_INPUT       = $(TEST_SRCS_INPUT:%.c=$(OBJDIR)/%.o)
 
 all: $(NAME)
 
@@ -95,6 +98,9 @@ $(TEST_NAME_EXPANDER): $(OBJS) $(TEST_OBJS_EXPANDER) $(LIBFT)
 $(TEST_NAME_ENV): $(OBJS) $(TEST_OBJS_ENV) $(LIBFT)
 	@$(CC) $(CFLAGS) $(OBJS) $(TEST_OBJS_ENV) $(LIBFT) -o $(TEST_NAME_ENV)
 
+$(TEST_NAME_INPUT): $(OBJS) $(TEST_OBJS_INPUT) $(LIBFT)
+	@$(CC) $(CFLAGS) $(OBJS) $(TEST_OBJS_INPUT) $(LIBFT) -o $(TEST_NAME_INPUT)
+
 run: $(NAME)
 	@./$(NAME)
 
@@ -113,6 +119,9 @@ run_tests_expander: $(TEST_NAME_EXPANDER)
 run_tests_env: $(TEST_NAME_ENV)
 	@./$(TEST_NAME_ENV)
 
+run_tests_input: $(TEST_NAME_INPUT)
+# 	@./$(TEST_NAME_INPUT)
+
 mem_check: $(TEST_NAME_LEXER)
 	@valgrind --leak-check=full \
 		--show-leak-kinds=all \
@@ -126,9 +135,9 @@ clean:
 	@$(MAKE) -C $(LIBFT_DIR) clean
 
 fclean: clean
-	@$(RM) $(NAME) $(TEST_NAME_LEXER) $(TEST_NAME_PARSER_ST1) $(TEST_NAME_PARSER_ST2) $(TEST_NAME_EXPANDER) $(TEST_NAME_ENV)
+	@$(RM) $(NAME) $(TEST_NAME_LEXER) $(TEST_NAME_PARSER_ST1) $(TEST_NAME_PARSER_ST2) $(TEST_NAME_EXPANDER) $(TEST_NAME_ENV) $(TEST_NAME_INPUT)
 	@$(MAKE) -C $(LIBFT_DIR) fclean
 
 re: fclean all
 
-.PHONY: all clean fclean re run run_tests run_tests_parser1 run_tests_parser2 run_tests_expander run_tests_env mem_check
+.PHONY: all clean fclean re run run_tests run_tests_parser1 run_tests_parser2 run_tests_expander run_tests_env mem_check run_process_input

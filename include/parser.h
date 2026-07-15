@@ -6,7 +6,7 @@
 /*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/07 17:01:03 by ykonka            #+#    #+#             */
-/*   Updated: 2026/07/13 14:43:45 by ykonka           ###   ########.fr       */
+/*   Updated: 2026/07/15 20:24:10 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include "libft.h"
 # include <stdio.h>
 # include <stdlib.h>
+# include "minishell.h"
 
 typedef enum e_redir_type
 {
@@ -36,13 +37,7 @@ typedef struct s_redir
 	struct s_redir	*next;
 }					t_redir;
 
-typedef struct s_env
-{
-	char			*key;
-	char			*value;
-	struct s_env	*next;
-}					t_env;
-
+// @Comment: Linkedlist
 typedef struct s_cmd
 {
 	char			**argv;
@@ -50,16 +45,23 @@ typedef struct s_cmd
 	struct s_cmd	*next;
 }					t_cmd;
 
+typedef struct s_env
+{
+	char			*key;
+	char			*value;
+	struct s_env	*next;
+}					t_env;
+
 typedef struct s_shell
 {
-	t_env			*env;
-	int				last_status;
 	char			*line;
 	t_token			*tokens;
 	t_cmd			*cmds;
+	t_env			*env;
 	int				stdin_fd;
 	int				stdout_fd;
 	int				heredoc_fd;
+	int				last_status;
 	int				exit_flag;
 }					t_shell;
 

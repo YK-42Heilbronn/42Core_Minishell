@@ -6,7 +6,7 @@
 /*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/08 13:14:04 by ykonka            #+#    #+#             */
-/*   Updated: 2026/07/13 13:22:55 by ykonka           ###   ########.fr       */
+/*   Updated: 2026/07/15 23:49:27 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ static int	handle_word(t_token **tokens, const char *line, int i)
 
 	len = word_len(line, i);
 	value = extract_word(line, i, len);
+	printf("value::%s\n", value);
 	if (!append_token_owned(tokens, TOK_WORD, value))
 		return (-1);
 	return (i + len);
@@ -56,6 +57,7 @@ t_token	*lex_input(const char *line, t_shell *shell)
 		return (NULL);
 	tokens = NULL;
 	i = 0;
+	printf("%s\n", line);
 	while (line[i])
 	{
 		while (line[i] && is_whitespace(line[i]))
@@ -69,7 +71,7 @@ t_token	*lex_input(const char *line, t_shell *shell)
 		else
 			i = handle_word(&tokens, line, i);
 		if (i == -1)
-			return (free_tokens(tokens), NULL);
+			return (free_tokens(&tokens), NULL);
 	}
 	return (tokens);
 }

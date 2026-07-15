@@ -6,7 +6,7 @@
 /*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/08 13:16:29 by ykonka            #+#    #+#             */
-/*   Updated: 2026/07/09 16:33:59 by ykonka           ###   ########.fr       */
+/*   Updated: 2026/07/15 02:33:19 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int	append_token_owned(t_token **tokens, t_token_type type, char *value)
 	if (!value)
 		return (0);
 	new_tok = new_token(type, value);
+	update_quotes_state(new_tok);
 	if (!new_tok)
 	{
 		free(value);
@@ -44,17 +45,4 @@ int	append_token_owned(t_token **tokens, t_token_type type, char *value)
 	}
 	add_token(tokens, new_tok);
 	return (1);
-}
-
-void	free_tokens(t_token *list)
-{
-	t_token	*next;
-
-	while (list)
-	{
-		next = list->next;
-		free(list->value);
-		free(list);
-		list = next;
-	}
 }

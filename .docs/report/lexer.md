@@ -16,7 +16,7 @@ e.g:: bash$ echo hello > out.txt | wc -c
 7   TOK_REDIR_IN    <
 8	TOK_APPEND      >>
 9	TOK_HEREDOC     <<
-10	TOK_EOF         
+10	TOK_EOF
 
 ### Step2:: Lexer will split and store the input tokens into following structure
 cmd1:

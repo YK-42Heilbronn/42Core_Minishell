@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleanup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ileongar <ileongar@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/08 21:17:17 by ileongar          #+#    #+#             */
-/*   Updated: 2026/07/14 23:31:43 by ileongar         ###   ########.fr       */
+/*   Updated: 2026/07/16 00:24:42 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	cleanup_command(t_shell *shell)
 		return ;
 	if (shell->tokens)
 	{
-		free_tokens(shell->tokens);
+		free_tokens(&(shell->tokens));
 		shell->tokens = NULL;
 	}
 	if (shell->cmds)
