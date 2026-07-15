@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ileongar <ileongar@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/07 17:01:03 by ykonka            #+#    #+#             */
-/*   Updated: 2026/07/15 20:24:10 by ykonka           ###   ########.fr       */
+/*   Updated: 2026/07/16 00:31:10 by ileongar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include "libft.h"
 # include <stdio.h>
 # include <stdlib.h>
-# include "minishell.h"
+# include <stdbool.h>
 
 typedef enum e_redir_type
 {
@@ -34,6 +34,8 @@ typedef struct s_redir
 {
 	t_redir_type	type;
 	char			*file;
+	int				fd;
+	bool			quoted;
 	struct s_redir	*next;
 }					t_redir;
 

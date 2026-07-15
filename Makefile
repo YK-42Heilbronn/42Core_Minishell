@@ -40,6 +40,7 @@ SRCS                = src/1_lexer/lexer.c \
                       src/5_executor/exec.c \
                       src/5_executor/redirections.c \
                       src/5_executor/utils_path.c \
+                      src/5_executor/heredoc.c \
                       src/6_builtins/cd.c \
                       src/6_builtins/echo.c \
                       src/6_builtins/env.c \
@@ -48,10 +49,7 @@ SRCS                = src/1_lexer/lexer.c \
                       src/6_builtins/pwd.c \
                       src/6_builtins/unset.c
 
-MAIN_SRCS           = src/main/init.c \
-                      src/main/main.c \
-                      src/main/process_line.c \
-                      src/main/cleanup.c \
+MAIN_SRCS           = src/main/main.c \
                       src/main/signals.c \
                       src/main/utils.c
 
