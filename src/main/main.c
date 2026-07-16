@@ -6,7 +6,7 @@
 /*   By: ileongar <ileongar@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/08 21:00:22 by ileongar          #+#    #+#             */
-/*   Updated: 2026/07/15 22:48:31 by ileongar         ###   ########.fr       */
+/*   Updated: 2026/07/16 01:09:17 by ileongar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ void	shell_exit(t_shell *shell, int status)
 void	run_one_line(t_shell *shell, char *line)
 {
 	shell->line = line;
-	if (*line)
-		add_history(line);
+	if (shell->line && *(shell->line))
+		add_history(shell->line);
 	if (has_unclosed_quotes(line))
 	{
 		write_str(2, "minishell: syntax error: unclosed quotes\n");

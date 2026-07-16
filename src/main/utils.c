@@ -6,7 +6,7 @@
 /*   By: ileongar <ileongar@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/11 00:02:15 by ileongar          #+#    #+#             */
-/*   Updated: 2026/07/15 22:48:43 by ileongar         ###   ########.fr       */
+/*   Updated: 2026/07/16 01:27:50 by ileongar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,19 +35,19 @@ void	print_exec_error(char *name, char *msg)
 	write_str(2, "\n");
 }
 
-void	free_cmd(t_cmd *cmd)
+void	free_cmd(t_cmd **cmd)
 {
 	t_redir	*redir;
 	t_redir	*next_redir;
 	int		i;
 
-	if (!cmd)
+	if (!(*cmd))
 		return ;
 	i = 0;
-	while (cmd->argv && cmd->argv[i])
-		free(cmd->argv[i++]);
-	free(cmd->argv);
-	redir = cmd->redirs;
+	while ((*cmd)->argv && (*cmd)->argv[i])
+		free((*cmd)->argv[i++]);
+	free((*cmd)->argv);
+	redir = (*cmd)->redirs;
 	while (redir)
 	{
 		next_redir = redir->next;
@@ -57,7 +57,8 @@ void	free_cmd(t_cmd *cmd)
 		free(redir);
 		redir = next_redir;
 	}
-	free(cmd);
+	free((*cmd));
+	*cmd = NULL;
 }
 
 void	free_cmds(t_cmd *cmds)
@@ -66,8 +67,8 @@ void	free_cmds(t_cmd *cmds)
 
 	while (cmds)
 	{
-		next = cmds->next;
-		free_cmd(cmds);
+		next = (cmds)->next;
+		free_cmd(&cmds);
 		cmds = next;
 	}
 }

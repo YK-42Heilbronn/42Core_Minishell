@@ -6,7 +6,7 @@
 /*   By: ileongar <ileongar@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/08 21:17:30 by ileongar          #+#    #+#             */
-/*   Updated: 2026/07/15 22:48:37 by ileongar         ###   ########.fr       */
+/*   Updated: 2026/07/16 01:59:11 by ileongar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@
 
 #include "minishell.h"
 
-volatile sig_atomic_t	g_signal = 0;
+// volatile sig_atomic_t	g_signal = 0;
 
 static void	sigint_handler(int sig)
 {

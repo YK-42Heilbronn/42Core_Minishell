@@ -6,7 +6,7 @@
 /*   By: ileongar <ileongar@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 16:22:02 by ykonka            #+#    #+#             */
-/*   Updated: 2026/07/16 00:29:15 by ileongar         ###   ########.fr       */
+/*   Updated: 2026/07/16 02:00:00 by ileongar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@
 # include <readline/history.h>
 # include <readline/readline.h>
 
+volatile sig_atomic_t	g_signal = 0;
+
 typedef struct s_token t_token;
 typedef struct s_cmd t_cmd;
 typedef struct s_env t_env;
@@ -43,7 +45,7 @@ typedef struct s_redir t_redir;
 // int		cmd_count(t_cmd *cmds);
 void	write_str(int fd, const char *s);
 void	print_exec_error(char *name, char *msg);
-void	free_cmd(t_cmd *cmd);
+void	free_cmd(t_cmd **cmd);
 void	free_cmds(t_cmd *cmds);
 void	reap_zombie_children(void);
 void	set_status_from_wait(t_shell *shell, int status);

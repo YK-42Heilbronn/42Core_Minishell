@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_commands.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ileongar <ileongar@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/09 16:56:22 by ykonka            #+#    #+#             */
-/*   Updated: 2026/07/10 14:10:34 by ykonka           ###   ########.fr       */
+/*   Updated: 2026/07/16 01:27:08 by ileongar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,15 @@ int	cmd_add_arg(t_cmd *cmd, char *word)
 		new_argv[i] = cmd->argv[i];
 		i++;
 	}
-	new_argv[i] = word;
+	// new_argv[i] = word;
+	new_argv[i] = ft_strdup(word);
+	if (!new_argv[i])
+	{
+		while (--i >= 0)
+			free(new_argv[i]);
+		free(new_argv);
+		return (0);
+	}
 	new_argv[i + 1] = NULL;
 	free(cmd->argv);
 	cmd->argv = new_argv;
