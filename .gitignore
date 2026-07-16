@@ -6,6 +6,7 @@
 .excludes/*
 .tests/*
 # tests/*
+src/2_parser/exe_test
 valgrind-out.txt
 
 # src/*

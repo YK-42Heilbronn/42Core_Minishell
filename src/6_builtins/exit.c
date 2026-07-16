@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ileongar <ileongar@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/12 23:35:15 by ileongar          #+#    #+#             */
-/*   Updated: 2026/07/16 01:38:26 by ileongar         ###   ########.fr       */
+/*   Updated: 2026/07/16 23:15:02 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	builtin_exit(char **argv, t_shell *shell)
 {
 	int	status;
 
-	// write_str(1, "exit\n");
+	write_str(1, "exit\n");
 	if (argv[1] && argv[2])
 	{
 		write_str(2, "minishell: exit: too many arguments\n");

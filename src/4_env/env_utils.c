@@ -6,7 +6,7 @@
 /*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/10 16:01:29 by ykonka            #+#    #+#             */
-/*   Updated: 2026/07/16 19:46:27 by ykonka           ###   ########.fr       */
+/*   Updated: 2026/07/16 23:35:15 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ int	env_set_value(t_env **env, char *key, char *value)
 	t_env	*env_node;
 	t_env	*new_env;
 	char	*value_cpy;
+	char *key_dup;
+	char *value_dup;
 
 	env_node = *env;
 	if (!env || !*env || !key || !value)
@@ -82,9 +84,13 @@ int	env_set_value(t_env **env, char *key, char *value)
 		}
 		env_node = env_node->next;
 	}
-	new_env = env_new_node(key, value);
+	key_dup = ft_strdup(key);
+	value_dup = ft_strdup(value);
+	if (!key_dup || !value_dup)
+		return (free(key_dup), free(value_dup), 0);
+	new_env = env_new_node(key_dup, value_dup);
 	if (new_env == NULL)
-		return (0);
+		return (free(key_dup), free(value_dup), 0);
 	env_add_back(env, new_env);
 	return (1);
 }

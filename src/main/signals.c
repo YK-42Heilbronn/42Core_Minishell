@@ -6,7 +6,7 @@
 /*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/08 21:17:30 by ileongar          #+#    #+#             */
-/*   Updated: 2026/07/16 21:35:55 by ykonka           ###   ########.fr       */
+/*   Updated: 2026/07/16 23:15:25 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void	set_signals_interactive(void)
 {
 	struct sigaction	sa;
 
+	// rl_catch_signals = 0;
 	sa.sa_handler = sigint_handler;
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = 0;

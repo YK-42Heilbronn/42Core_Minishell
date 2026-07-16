@@ -6,7 +6,7 @@
 /*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/09 16:56:06 by ykonka            #+#    #+#             */
-/*   Updated: 2026/07/16 03:29:26 by ykonka           ###   ########.fr       */
+/*   Updated: 2026/07/17 00:32:26 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 int	print_syntax_error(char *token)
 {
-	printf("minishell: '%s'\n", token);
+	printf("minishell: %s\n", token);
 	return (1);
 }
 
@@ -26,7 +26,15 @@ int	is_redir_token(t_token_type type)
 		return (1);
 	return (0);
 }
+int print_multi_str_error(char *s1, char *s2)
+{
+	char *join_s;
 
+	join_s = ft_strjoin(s1, s2);
+	print_syntax_error(join_s);
+	free(join_s);
+	return (1);
+}
 static int	redir_checks(t_token *token)
 {
 	t_token	*next;
@@ -37,9 +45,9 @@ static int	redir_checks(t_token *token)
 	if (next->type == TOK_PIPE)
 		return (print_syntax_error("|"));
 	if (is_redir_token(next->type))
-		return (print_syntax_error(next->value));
+		return (print_multi_str_error("syntax error ", next->value));
 	if (next->type != TOK_WORD)
-		return (print_syntax_error(next->value));
+		return (print_multi_str_error("syntax error ", next->value));
 	return (0);
 }
 
@@ -51,7 +59,7 @@ static int	pipe_checks(t_token *token)
 	if (!next)
 		return (print_syntax_error("syntax error"));
 	if (next->type == TOK_PIPE)
-		return (print_syntax_error("|"));
+		return (print_syntax_error("parse error near '|'"));
 	return (0);
 }
 
@@ -62,12 +70,12 @@ static int	validate_end_nodes(t_token *tokens)
 	if (!tokens)
 		return (0);
 	if (tokens->type == TOK_PIPE)
-		return (print_syntax_error("|"));
+		return (print_syntax_error("parse error near '|'"));
 	last = tokens;
 	while (last->next)
 		last = last->next;
 	if (last->type == TOK_PIPE)
-		return (print_syntax_error("|"));
+		return (print_syntax_error("parse error near '|'"));
 	return (0);
 }
 
