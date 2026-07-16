@@ -3,28 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ileongar <ileongar@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/10 16:01:29 by ykonka            #+#    #+#             */
-/*   Updated: 2026/07/15 00:08:54 by ileongar         ###   ########.fr       */
+/*   Updated: 2026/07/16 19:46:27 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expander.h"
 
-t_env	*env_get_node(t_env *env, const char *key)
+t_env	*env_get_node(t_env *env, char *key)
 {
-	t_env *env_node;
+	t_env	*env_node;
 
 	if (!env || !key)
 		return (NULL);
 	env_node = env;
 	while (env_node)
 	{
-		if(env_node->key
-		   && ft_strlen(env_node->key) == ft_strlen(key)
-		   && ft_strncmp(env_node->key, key, ft_strlen(key)+1) == 0)
-		   return (env_node);
+		if (env_node->key && ft_strlen(env_node->key) == ft_strlen(key)
+			&& ft_strncmp(env_node->key, key, ft_strlen(key) + 1) == 0)
+			return (env_node);
 		env_node = env_node->next;
 	}
 	return (NULL);
@@ -37,19 +36,18 @@ Compare env->key with key.
 Return env->value if found.
 Return NULL if not found.
 */
-char	*env_get_value(t_env *env, const char *key)
+char	*env_get_value(t_env *env, char *key)
 {
-	t_env *env_node;
+	t_env	*env_node;
 
 	if (!env || !key)
 		return (NULL);
 	env_node = env;
 	while (env_node)
 	{
-		if(env_node->key
-		   && ft_strlen(env_node->key) == ft_strlen(key)
-		   && ft_strncmp(env_node->key, key, ft_strlen(key)+1) == 0)
-		   return (env_node->value);
+		if (env_node->key && ft_strlen(env_node->key) == ft_strlen(key)
+			&& ft_strncmp(env_node->key, key, ft_strlen(key) + 1) == 0)
+			return (env_node->value);
 		env_node = env_node->next;
 	}
 	return (NULL);
@@ -61,27 +59,26 @@ search the shell env list for the given key
 if the key already exists, replace its value
 if the key does not exist, create a new t_env node and add it to the list
 */
-int		env_set_value(t_env **env, const char *key, const char *value)
+int	env_set_value(t_env **env, char *key, char *value)
 {
-	t_env *env_node;
-	t_env *new_env;
-	char *value_cpy;
+	t_env	*env_node;
+	t_env	*new_env;
+	char	*value_cpy;
 
 	env_node = *env;
 	if (!env || !*env || !key || !value)
 		return (0);
 	while (env_node)
 	{
-		if (env_node->key
-			&& ft_strlen(env_node->key) == ft_strlen(key)
-			&& ft_strncmp(env_node->key, key, ft_strlen(key)+1) == 0)
+		if (env_node->key && ft_strlen(env_node->key) == ft_strlen(key)
+			&& ft_strncmp(env_node->key, key, ft_strlen(key) + 1) == 0)
 		{
 			value_cpy = ft_strdup(value);
 			if (value_cpy == NULL)
 				return (0);
 			free(env_node->value);
 			env_node->value = value_cpy;
-			return(1);
+			return (1);
 		}
 		env_node = env_node->next;
 	}
@@ -125,7 +122,7 @@ free its key, value, and the node itself
 // 	return (0);
 // }
 
-int	env_unset_value(t_env **env, const char *key)
+int	env_unset_value(t_env **env, char *key)
 {
 	t_env	*cur;
 	t_env	*prev;
@@ -136,8 +133,7 @@ int	env_unset_value(t_env **env, const char *key)
 	prev = NULL;
 	while (cur)
 	{
-		if (cur->key
-			&& ft_strlen(cur->key) == ft_strlen(key)
+		if (cur->key && ft_strlen(cur->key) == ft_strlen(key)
 			&& ft_strncmp(cur->key, key, ft_strlen(key) + 1) == 0)
 		{
 			if (prev == NULL)

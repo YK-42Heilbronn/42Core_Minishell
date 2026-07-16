@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parser_commands.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ileongar <ileongar@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/09 16:56:22 by ykonka            #+#    #+#             */
-/*   Updated: 2026/07/16 01:27:08 by ileongar         ###   ########.fr       */
+/*   Updated: 2026/07/16 21:32:50 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
 #include "lexer.h"
 #include "libft.h"
+#include "parser.h"
 #include <stdlib.h>
 
 t_cmd	*new_cmd(void)
@@ -32,6 +32,16 @@ t_cmd	*new_cmd(void)
 	cmd->redirs = NULL;
 	cmd->next = NULL;
 	return (cmd);
+}
+void free_argv(char **argv)
+{
+	while (*argv)
+	{
+		free(*argv);
+		argv++;
+	}
+	free(*argv);
+	*argv = NULL;
 }
 
 int	cmd_add_arg(t_cmd *cmd, char *word)
@@ -54,15 +64,9 @@ int	cmd_add_arg(t_cmd *cmd, char *word)
 		new_argv[i] = cmd->argv[i];
 		i++;
 	}
-	// new_argv[i] = word;
 	new_argv[i] = ft_strdup(word);
 	if (!new_argv[i])
-	{
-		while (--i >= 0)
-			free(new_argv[i]);
-		free(new_argv);
-		return (0);
-	}
+		return (free_argv(new_argv), 0);
 	new_argv[i + 1] = NULL;
 	free(cmd->argv);
 	cmd->argv = new_argv;

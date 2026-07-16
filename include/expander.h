@@ -6,7 +6,7 @@
 /*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/07 17:29:32 by ykonka            #+#    #+#             */
-/*   Updated: 2026/07/15 20:25:30 by ykonka           ###   ########.fr       */
+/*   Updated: 2026/07/16 19:45:40 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,17 @@
 typedef struct s_env t_env;
 
 /* src/env/env_init.c */
-t_env	*env_new_node(const char *key, const char *value);
+t_env	*env_new_node(char *key, char *value);
 void	env_add_back(t_env **env, t_env *new_node);
 int		env_init(t_shell *shell, char **envp);
 t_env	*split_envp_value(char *env_value);
 void	free_env(t_env **sh_env);
 
 /* src/env/env_utils.c */
-t_env	*env_get_node(t_env *env, const char *key);
-char	*env_get_value(t_env *env, const char *key);
-int		env_set_value(t_env **env, const char *key, const char *value);
-int		env_unset_value(t_env **env, const char *key);
+t_env	*env_get_node(t_env *env, char *key);
+char	*env_get_value(t_env *env, char *key);
+int		env_set_value(t_env **env, char *key, char *value);
+int		env_unset_value(t_env **env, char *key);
 
 /* src/env/env_to_array.c */
 void	free_envp(char **envp);

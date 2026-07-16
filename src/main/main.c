@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ileongar <ileongar@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/08 21:00:22 by ileongar          #+#    #+#             */
-/*   Updated: 2026/07/16 01:09:17 by ileongar         ###   ########.fr       */
+/*   Updated: 2026/07/16 21:33:37 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ void	run_one_line(t_shell *shell, char *line)
 		execute_cmds(shell);
 	free_cmds(shell->cmds);
 	shell->cmds = NULL;
+	free_tokens(&(shell->tokens));
+	shell->tokens = NULL;
 	free(line);
 	shell->line = NULL;
 }

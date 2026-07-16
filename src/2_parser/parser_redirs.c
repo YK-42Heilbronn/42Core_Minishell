@@ -6,7 +6,7 @@
 /*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/09 16:56:39 by ykonka            #+#    #+#             */
-/*   Updated: 2026/07/13 14:42:59 by ykonka           ###   ########.fr       */
+/*   Updated: 2026/07/16 20:25:18 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,9 @@ t_redir	*new_redir(t_redir_type type, char *file)
 	if (!new_redir)
 		return (NULL);
 	new_redir->type = type;
-	new_redir->file = file;
+	new_redir->file = ft_strdup(file);
+	if (new_redir->file == NULL)
+		return (free(new_redir), NULL);
 	new_redir->next = NULL;
 	return (new_redir);
 }

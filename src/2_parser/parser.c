@@ -6,7 +6,7 @@
 /*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/09 14:51:18 by ykonka            #+#    #+#             */
-/*   Updated: 2026/07/16 00:24:23 by ykonka           ###   ########.fr       */
+/*   Updated: 2026/07/16 20:58:26 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,14 @@ void print_tokens(t_token *token)
 	}
 }
 
+// int error_state_handling(t_shell *shell, int last_status, int ret_v)
+// {
+// 	free_tokens(&(shell->tokens));
+// 	shell->tokens = NULL;
+// 	shell->last_status = last_status;
+// 	return (ret_v);
+// }
+
 int	process_input(char *line, t_shell *shell)
 {
 	if (!line || !shell)
@@ -148,6 +156,6 @@ int	process_input(char *line, t_shell *shell)
 		free_cmds(shell->cmds);
 	shell->cmds = parse_tokens(shell->tokens, shell);
 	if (!shell->cmds)
-		return (shell->last_status=-1, -1);
+		return (free_tokens(&(shell->tokens)), shell->last_status=-1, -1);
 	return (0);
 }

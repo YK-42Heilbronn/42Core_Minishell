@@ -6,7 +6,7 @@
 /*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/10 16:02:04 by ykonka            #+#    #+#             */
-/*   Updated: 2026/07/13 17:11:31 by ykonka           ###   ########.fr       */
+/*   Updated: 2026/07/16 18:48:45 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,11 +73,12 @@ char	*str_append_char(char *src, char c)
     len = ft_strlen(src);
     appended_str = malloc(len + 2);
     if (!appended_str)
-        return (free(src), NULL);
+        return (NULL);  // free(src)
     ft_memcpy(appended_str, src, len);
     appended_str[len] = c;
     appended_str[len + 1] = '\0';
     free(src);
+    src = NULL;
     return (appended_str);
 }
 
@@ -90,6 +91,9 @@ char	*str_append_str(char *src, const char *suffix)
     if (!src)
         return (ft_strdup(suffix));
     new_str = ft_strjoin(src, suffix);
+    if (!new_str)
+        return (NULL);
     free(src);
+    src = NULL;
     return (new_str);
 }

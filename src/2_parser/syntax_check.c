@@ -6,7 +6,7 @@
 /*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/09 16:56:06 by ykonka            #+#    #+#             */
-/*   Updated: 2026/07/15 21:52:05 by ykonka           ###   ########.fr       */
+/*   Updated: 2026/07/16 03:29:26 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 int	print_syntax_error(char *token)
 {
-	printf("minishell: syntax error at token '%s'\n", token);
+	printf("minishell: '%s'\n", token);
 	return (1);
 }
 
