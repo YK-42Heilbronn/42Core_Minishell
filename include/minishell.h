@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ileongar <ileongar@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/09 16:22:02 by ykonka            #+#    #+#             */
-/*   Updated: 2026/07/16 02:00:00 by ileongar         ###   ########.fr       */
+/*   Updated: 2026/07/16 21:35:41 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 # include <readline/history.h>
 # include <readline/readline.h>
 
-volatile sig_atomic_t	g_signal = 0;
+// volatile sig_atomic_t	g_signal = 0;
 
 typedef struct s_token t_token;
 typedef struct s_cmd t_cmd;
