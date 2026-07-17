@@ -6,7 +6,7 @@
 /*   By: ileongar <ileongar@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/12 17:56:16 by ileongar          #+#    #+#             */
-/*   Updated: 2026/07/15 23:32:38 by ileongar         ###   ########.fr       */
+/*   Updated: 2026/07/17 02:35:48 by ileongar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,40 +48,23 @@ int	exec_builtin(t_cmd *cmd, t_shell *shell)
 	return (builtin_exit(cmd->argv, shell));
 }
 
-// int	is_builtin(char *cmd)
-// {
-// 	if (!cmd)
-// 		return (0);
-// 	return ((ft_strlen(cmd) == 2 && ft_strncmp(cmd, "cd", 2) == 0)
-// 		|| (ft_strlen(cmd) == 4 && ft_strncmp(cmd, "echo", 4) == 0)
-// 		|| (ft_strlen(cmd) == 3 && ft_strncmp(cmd, "env", 3) == 0)
-// 		|| (ft_strlen(cmd) == 4 && ft_strncmp(cmd, "exit", 4) == 0)
-// 		|| (ft_strlen(cmd) == 6 && ft_strncmp(cmd, "export", 6) == 0)
-// 		|| (ft_strlen(cmd) == 3 && ft_strncmp(cmd, "pwd", 3) == 0)
-// 		|| (ft_strlen(cmd) == 5 && ft_strncmp(cmd, "unset", 5) == 0));
-// }
+/* builtins that must affect the real shell (cd, export, unset, exit...)
+ * run here, in the parent, without forking. Redirections are applied and
+ * then reverted around the call so `pwd > file` etc. behave correctly. */
 
-// int	exec_builtin(t_shell *shell, t_cmd *cmd)
-// {
-// 	if (!cmd || !cmd->argv || !cmd->argv[0])
-// 		return (1);
-// 	if (ft_strlen(cmd->argv[0]) == 2 && ft_strncmp(cmd->argv[0], "cd", 2) == 0)
-// 		return (builtin_cd(shell, cmd));
-// 	if (ft_strlen(cmd->argv[0]) == 4 && ft_strncmp(cmd->argv[0], "echo",
-// 			4) == 0)
-// 		return (builtin_echo(cmd));
-// 	if (ft_strlen(cmd->argv[0]) == 3 && ft_strncmp(cmd->argv[0], "env", 3) == 0)
-// 		return (builtin_env(shell));
-// 	if (ft_strlen(cmd->argv[0]) == 4 && ft_strncmp(cmd->argv[0], "exit",
-// 			4) == 0)
-// 		return (builtin_exit(shell, cmd));
-// 	if (ft_strlen(cmd->argv[0]) == 6 && ft_strncmp(cmd->argv[0], "export",
-// 			6) == 0)
-// 		return (builtin_export(shell, cmd));
-// 	if (ft_strlen(cmd->argv[0]) == 3 && ft_strncmp(cmd->argv[0], "pwd", 3) == 0)
-// 		return (builtin_pwd(cmd));
-// 	if (ft_strlen(cmd->argv[0]) == 5 && ft_strncmp(cmd->argv[0], "unset",
-// 			5) == 0)
-// 		return (builtin_unset(shell, cmd));
-// 	return (1);
-// }
+void	run_builtin_foreground(t_cmd *cmd, t_shell *shell)
+{
+	int	saved_in;
+	int	saved_out;
+
+	saved_in = dup(STDIN_FILENO);
+	saved_out = dup(STDOUT_FILENO);
+	if (apply_redirections(cmd, shell) == -1)
+		shell->last_status = 1;
+	else
+		shell->last_status = exec_builtin(cmd, shell);
+	dup2(saved_in, STDIN_FILENO);
+	dup2(saved_out, STDOUT_FILENO);
+	close(saved_in);
+	close(saved_out);
+}

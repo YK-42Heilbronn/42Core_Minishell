@@ -6,7 +6,7 @@
 /*   By: ileongar <ileongar@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/11 00:02:15 by ileongar          #+#    #+#             */
-/*   Updated: 2026/07/16 01:27:50 by ileongar         ###   ########.fr       */
+/*   Updated: 2026/07/17 03:11:31 by ileongar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@
 #include "minishell.h"
 #include "parser.h"
 
-/* every hardcoded write(fd, "literal", N) is one off-by-one bug waiting
- * to happen; route error/message output through this instead. */
 void	write_str(int fd, const char *s)
 {
 	write(fd, s, ft_strlen(s));
@@ -25,6 +23,7 @@ void	write_str(int fd, const char *s)
 
 /* stderr messages must go through write(), not printf (printf only
  * targets stdout and isn't safe to assume line-buffered on a pipe). */
+
 void	print_exec_error(char *name, char *msg)
 {
 	write_str(2, "minishell: ");
@@ -73,14 +72,6 @@ void	free_cmds(t_cmd *cmds)
 	}
 }
 
-/* sweeps up any stray heredoc-writer children that may still be around
- * (they normally finish on their own once the reading command is done). */
-void	reap_zombie_children(void)
-{
-	while (waitpid(-1, NULL, WNOHANG) > 0)
-		;
-}
-
 void	set_status_from_wait(t_shell *shell, int status)
 {
 	if (WIFEXITED(status))
@@ -94,16 +85,3 @@ void	set_status_from_wait(t_shell *shell, int status)
 			write_str(1, "\n");
 	}
 }
-
-// int	cmd_count(t_cmd *cmds)
-// {
-// 	int	n;
-
-// 	n = 0;
-// 	while (cmds)
-// 	{
-// 		n++;
-// 		cmds = cmds->next;
-// 	}
-// 	return (n);
-// }

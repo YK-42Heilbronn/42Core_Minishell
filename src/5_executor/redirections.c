@@ -6,7 +6,7 @@
 /*   By: ileongar <ileongar@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/13 17:01:22 by ileongar          #+#    #+#             */
-/*   Updated: 2026/07/15 22:47:39 by ileongar         ###   ########.fr       */
+/*   Updated: 2026/07/17 02:59:55 by ileongar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,23 @@
 #include "lexer.h"
 #include "minishell.h"
 #include "parser.h"
+
+void	run_redir_only(t_cmd *cmd, t_shell *shell)
+{
+	int	saved_in;
+	int	saved_out;
+
+	saved_in = dup(STDIN_FILENO);
+	saved_out = dup(STDOUT_FILENO);
+	if (apply_redirections(cmd, shell) == -1)
+		shell->last_status = 1;
+	else
+		shell->last_status = 0;
+	dup2(saved_in, STDIN_FILENO);
+	dup2(saved_out, STDOUT_FILENO);
+	close(saved_in);
+	close(saved_out);
+}
 
 int	open_input_redir(t_redir *redir)
 {
@@ -54,6 +71,7 @@ int	open_output_redir(t_redir *redir, int append)
 
 /* redir->fd was already filled in by handle_heredocs() before the
  * pipeline/command started (see exec_heredoc.c). */
+
 int	apply_heredoc_redir(t_redir *redir)
 {
 	if (redir->fd == -1)
@@ -67,6 +85,7 @@ int	apply_heredoc_redir(t_redir *redir)
 
 /* redirections are applied in the order they were parsed, so later ones
  * on the same fd naturally win, matching bash (`cmd < a < b` uses b). */
+
 int	apply_redirections(t_cmd *cmd, t_shell *shell)
 {
 	t_redir	*redir;
@@ -87,75 +106,3 @@ int	apply_redirections(t_cmd *cmd, t_shell *shell)
 	}
 	return (0);
 }
-
-
-// int	open_redir_fd(t_shell *shell, t_redir *r)
-// {
-// 	if (r->type == R_HEREDOC)
-// 		return (shell->heredoc_fd);
-// 	if (r->type == R_IN)
-// 		return (open(r->file, O_RDONLY));
-// 	if (r->type == R_OUT)
-// 		return (open(r->file, O_WRONLY | O_CREAT | O_TRUNC, 0644));
-// 	if (r->type == R_APPEND)
-// 		return (open(r->file, O_WRONLY | O_CREAT | O_APPEND, 0644));
-// 	return (-1);
-// }
-
-// int	apply_input_redir(t_redir *r, int fd)
-// {
-// 	if (dup2(fd, STDIN_FILENO) < 0)
-// 	{
-// 		perror("dup2");
-// 		if (r->type != R_HEREDOC)
-// 			close(fd);
-// 		return (1);
-// 	}
-// 	if (r->type != R_HEREDOC)
-// 		close(fd);
-// 	return (0);
-// }
-
-// int	apply_output_redir(int fd)
-// {
-// 	if (dup2(fd, STDOUT_FILENO) < 0)
-// 	{
-// 		perror("dup2");
-// 		close(fd);
-// 		return (1);
-// 	}
-// 	close(fd);
-// 	return (0);
-// }
-
-// int	apply_one_redir(t_shell *shell, t_redir *r)
-// {
-// 	int	fd;
-
-// 	fd = open_redir_fd(shell, r);
-// 	if (fd < 0)
-// 	{
-// 		perror(r->file);
-// 		return (1);
-// 	}
-// 	if (r->type == R_HEREDOC || r->type == R_IN)
-// 		return (apply_input_redir(r, fd));
-// 	return (apply_output_redir(fd));
-// }
-
-// int	apply_redirs(t_shell *shell, t_cmd *cmd, int is_child)
-// {
-// 	t_redir	*r;
-
-// 	(void)is_child;
-// 	if (!shell || !cmd)
-// 		return (1);
-// 	r = cmd->redirs;
-// 	while (r)
-// 	{
-// 		if (apply_one_redir(shell, r))
-// 			return (1);
-// 		r = r->next;
-// 	}
-// 	return (0);
-// }

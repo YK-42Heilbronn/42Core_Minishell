@@ -35,12 +35,14 @@ SRCS                = src/1_lexer/lexer.c \
                       src/4_env/env_utils.c \
                       src/4_env/env_to_array.c \
                       src/5_executor/exec_builtins.c \
-                      src/5_executor/exec_child.c \
+                      src/5_executor/exec_path.c \
                       src/5_executor/exec_pipeline.c \
                       src/5_executor/exec.c \
-                      src/5_executor/redirections.c \
-                      src/5_executor/utils_path.c \
                       src/5_executor/heredoc.c \
+                      src/5_executor/redirections.c \
+                      src/5_executor/utils_heredoc.c \
+                      src/5_executor/utils_path.c \
+                      src/5_executor/utils_pipeline.c \
                       src/6_builtins/cd.c \
                       src/6_builtins/echo.c \
                       src/6_builtins/env.c \
