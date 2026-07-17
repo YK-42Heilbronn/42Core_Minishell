@@ -6,7 +6,7 @@
 /*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/08 13:14:04 by ykonka            #+#    #+#             */
-/*   Updated: 2026/07/16 21:30:38 by ykonka           ###   ########.fr       */
+/*   Updated: 2026/07/17 02:14:57 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,42 @@ static int	handle_pipe(t_token **tokens, const char *line, int i)
 	return (i + 1);
 }
 
+static int	handle_redir_inout(t_token **tokens, const char *line, int i)
+{
+	if (line[i] == '<')
+	{
+		if (append_token_dup(tokens, TOK_REDIR_IN, "<"))
+			return (i + 1);
+		else
+			return (-1);
+	}
+	if (line[i] == '>')
+	{
+		if (append_token_dup(tokens, TOK_REDIR_OUT, ">"))
+			return (i + 1);
+		else
+			return (-1);
+	}
+	return (i);
+}
+
 static int	handle_redir(t_token **tokens, const char *line, int i)
 {
 	if (line[i] == '<' && line[i + 1] == '<')
-		return (append_token_dup(tokens, TOK_HEREDOC, "<<") ? i + 2 : -1);
+	{
+		if (append_token_dup(tokens, TOK_HEREDOC, "<<"))
+			return (i + 2);
+		else
+			return (-1);
+	}
 	if (line[i] == '>' && line[i + 1] == '>')
-		return (append_token_dup(tokens, TOK_APPEND, ">>") ? i + 2 : -1);
-	if (line[i] == '<')
-		return (append_token_dup(tokens, TOK_REDIR_IN, "<") ? i + 1 : -1);
-	if (line[i] == '>')
-		return (append_token_dup(tokens, TOK_REDIR_OUT, ">") ? i + 1 : -1);
-	return (i);
+	{
+		if (append_token_dup(tokens, TOK_APPEND, ">>"))
+			return (i + 2);
+		else
+			return (-1);
+	}
+	return (handle_redir_inout(tokens, line, i));
 }
 
 static int	handle_word(t_token **tokens, const char *line, int i)
@@ -40,7 +65,6 @@ static int	handle_word(t_token **tokens, const char *line, int i)
 
 	len = word_len(line, i);
 	value = extract_word(line, i, len);
-	// printf("value::%s\n", value);
 	if (!append_token_owned(tokens, TOK_WORD, value))
 		return (-1);
 	return (i + len);
@@ -57,7 +81,6 @@ t_token	*lex_input(const char *line, t_shell *shell)
 		return (NULL);
 	tokens = NULL;
 	i = 0;
-	// printf("%s\n", line);
 	while (line[i])
 	{
 		while (line[i] && is_whitespace(line[i]))

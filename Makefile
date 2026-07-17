@@ -1,10 +1,4 @@
 NAME                = minishell
-TEST_NAME_LEXER     = lexer_tests
-TEST_NAME_PARSER_ST1= parser_tests_stage1
-TEST_NAME_PARSER_ST2= parser_tests_stage2
-TEST_NAME_EXPANDER  = expander_tests
-TEST_NAME_ENV       = env_tests
-TEST_NAME_INPUT = test_process_input
 
 CC                  = cc
 CFLAGS              = -Wall -Wextra -Werror
@@ -28,7 +22,7 @@ SRCS                = src/1_lexer/lexer.c \
                       src/2_parser/parser_commands.c \
                       src/2_parser/parser_redirs.c \
                       src/3_expand/expand_utils.c \
-                      src/3_expand/expand_status.c \
+                      src/3_expand/expand_word_utils.c \
                       src/3_expand/expand_word.c \
                       src/3_expand/expand.c \
                       src/4_env/env_init.c \
@@ -55,21 +49,8 @@ MAIN_SRCS           = src/main/main.c \
                       src/main/signals.c \
                       src/main/utils.c
 
-TEST_SRCS_LEXER     = tests/main_lexer_tests.c
-TEST_SRCS_PARSER_ST1= tests/main_parser_tests_stage1.c
-TEST_SRCS_PARSER_ST2= tests/main_parser_tests_stage2.c
-TEST_SRCS_EXPANDER  = tests/main_expander_tests.c
-TEST_SRCS_ENV       = tests/main_env_tests.c
-TEST_SRCS_INPUT = tests/main_process_input_tests.c
-
 OBJS                = $(SRCS:%.c=$(OBJDIR)/%.o)
 MAIN_OBJS           = $(MAIN_SRCS:%.c=$(OBJDIR)/%.o)
-TEST_OBJS_LEXER     = $(TEST_SRCS_LEXER:%.c=$(OBJDIR)/%.o)
-TEST_OBJS_PARSER_ST1= $(TEST_SRCS_PARSER_ST1:%.c=$(OBJDIR)/%.o)
-TEST_OBJS_PARSER_ST2= $(TEST_SRCS_PARSER_ST2:%.c=$(OBJDIR)/%.o)
-TEST_OBJS_EXPANDER  = $(TEST_SRCS_EXPANDER:%.c=$(OBJDIR)/%.o)
-TEST_OBJS_ENV       = $(TEST_SRCS_ENV:%.c=$(OBJDIR)/%.o)
-TEST_OBJS_INPUT       = $(TEST_SRCS_INPUT:%.c=$(OBJDIR)/%.o)
 
 all: $(NAME)
 
@@ -83,61 +64,14 @@ $(OBJDIR)/%.o: %.c
 	@$(MKDIR_P) $(@D)
 	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
-$(TEST_NAME_LEXER): $(OBJS) $(TEST_OBJS_LEXER) $(LIBFT)
-	@$(CC) $(CFLAGS) $(OBJS) $(TEST_OBJS_LEXER) $(LIBFT) -o $(TEST_NAME_LEXER)
-
-$(TEST_NAME_PARSER_ST1): $(OBJS) $(TEST_OBJS_PARSER_ST1) $(LIBFT)
-	@$(CC) $(CFLAGS) $(OBJS) $(TEST_OBJS_PARSER_ST1) $(LIBFT) -o $(TEST_NAME_PARSER_ST1)
-
-$(TEST_NAME_PARSER_ST2): $(OBJS) $(TEST_OBJS_PARSER_ST2) $(LIBFT)
-	@$(CC) $(CFLAGS) $(OBJS) $(TEST_OBJS_PARSER_ST2) $(LIBFT) -o $(TEST_NAME_PARSER_ST2)
-
-$(TEST_NAME_EXPANDER): $(OBJS) $(TEST_OBJS_EXPANDER) $(LIBFT)
-	@$(CC) $(CFLAGS) $(OBJS) $(TEST_OBJS_EXPANDER) $(LIBFT) -o $(TEST_NAME_EXPANDER)
-
-$(TEST_NAME_ENV): $(OBJS) $(TEST_OBJS_ENV) $(LIBFT)
-	@$(CC) $(CFLAGS) $(OBJS) $(TEST_OBJS_ENV) $(LIBFT) -o $(TEST_NAME_ENV)
-
-$(TEST_NAME_INPUT): $(OBJS) $(TEST_OBJS_INPUT) $(LIBFT)
-	@$(CC) $(CFLAGS) $(OBJS) $(TEST_OBJS_INPUT) $(LIBFT) -o $(TEST_NAME_INPUT)
-
-run: $(NAME)
-	@./$(NAME)
-
-run_tests: $(TEST_NAME_LEXER)
-	@./$(TEST_NAME_LEXER)
-
-run_tests_parser1: $(TEST_NAME_PARSER_ST1)
-	@./$(TEST_NAME_PARSER_ST1)
-
-run_tests_parser2: $(TEST_NAME_PARSER_ST2)
-	@./$(TEST_NAME_PARSER_ST2)
-
-run_tests_expander: $(TEST_NAME_EXPANDER)
-	@./$(TEST_NAME_EXPANDER)
-
-run_tests_env: $(TEST_NAME_ENV)
-	@./$(TEST_NAME_ENV)
-
-run_tests_input: $(TEST_NAME_INPUT)
-# 	@./$(TEST_NAME_INPUT)
-
-mem_check: $(TEST_NAME_LEXER)
-	@valgrind --leak-check=full \
-		--show-leak-kinds=all \
-		--track-origins=yes \
-		--verbose \
-		--log-file=valgrind-out.txt \
-		./$(TEST_NAME_LEXER)
-
 clean:
 	@$(RM) -r $(OBJDIR)
 	@$(MAKE) -C $(LIBFT_DIR) clean
 
 fclean: clean
-	@$(RM) $(NAME) $(TEST_NAME_LEXER) $(TEST_NAME_PARSER_ST1) $(TEST_NAME_PARSER_ST2) $(TEST_NAME_EXPANDER) $(TEST_NAME_ENV) $(TEST_NAME_INPUT)
+	@$(RM) $(NAME)
 	@$(MAKE) -C $(LIBFT_DIR) fclean
 
 re: fclean all
 
-.PHONY: all clean fclean re run run_tests run_tests_parser1 run_tests_parser2 run_tests_expander run_tests_env mem_check run_process_input
+.PHONY: all clean fclean re

@@ -6,18 +6,18 @@
 /*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/12 14:50:10 by ykonka            #+#    #+#             */
-/*   Updated: 2026/07/12 21:09:27 by ykonka           ###   ########.fr       */
+/*   Updated: 2026/07/17 02:47:52 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expander.h"
 
-void free_envp(char **envp)
+void	free_envp(char **envp)
 {
-	char **temp;
+	char	**temp;
 
 	if (!envp)
-		return;
+		return ;
 	temp = envp;
 	while (*envp)
 	{
@@ -27,10 +27,10 @@ void free_envp(char **envp)
 	free(temp);
 }
 
-static int count_env_nodes(t_env *env)
+static int	count_env_nodes(t_env *env)
 {
-	int size;
-	t_env *next_env;
+	int		size;
+	t_env	*next_env;
 
 	next_env = env;
 	size = 0;
@@ -41,23 +41,6 @@ static int count_env_nodes(t_env *env)
 	}
 	return (size);
 }
-
-// static char *concatenate_envp_value(char *key, char *value, char **envp)
-// {
-// 	char *k_new_value;
-// 	char *v_new_value;
-
-// 	k_new_value = ft_strjoin(key, "=");
-// 	if (k_new_value == NULL)
-// 		return (free_envp(envp), NULL);
-// 	if (value == NULL)
-// 		v_new_value = ft_strjoin(k_new_value, "");
-// 	else
-// 		v_new_value = ft_strjoin(k_new_value, value);
-// 	if (v_new_value == NULL)
-// 		return (free_envp(envp), free(k_new_value), NULL);
-// 	return (v_new_value);
-// }
 
 static char	*concatenate_envp_value(char *key, char *value)
 {
@@ -77,23 +60,20 @@ static char	*concatenate_envp_value(char *key, char *value)
 
 char	**env_to_array(t_env *env)
 {
-	int size;
-	char **envp;
-	char *new_value;
-	// t_env *next_env;
-	int ind;
+	int		size;
+	char	**envp;
+	char	*new_value;
+	int		ind;
 
 	size = count_env_nodes(env);
 	ind = 0;
-	envp = (char**)malloc(sizeof(char*)*(size+1));
+	envp = (char **)malloc(sizeof(char *) * (size + 1));
 	if (envp == NULL)
 		return (NULL);
-	// next_env = env;
 	while (env)
 	{
 		new_value = concatenate_envp_value(env->key, env->value);
 		envp[ind++] = new_value;
-		// next_env = next_env->next;
 		env = env->next;
 	}
 	envp[ind] = NULL;

@@ -6,7 +6,7 @@
 /*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/09 16:56:22 by ykonka            #+#    #+#             */
-/*   Updated: 2026/07/16 21:32:50 by ykonka           ###   ########.fr       */
+/*   Updated: 2026/07/17 02:18:20 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ t_cmd	*new_cmd(void)
 	cmd->next = NULL;
 	return (cmd);
 }
-void free_argv(char **argv)
+
+void	free_argv(char **argv)
 {
 	while (*argv)
 	{

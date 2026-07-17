@@ -6,14 +6,14 @@
 /*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/09 14:51:18 by ykonka            #+#    #+#             */
-/*   Updated: 2026/07/16 20:58:26 by ykonka           ###   ########.fr       */
+/*   Updated: 2026/07/17 02:20:05 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
-#include "lexer.h"
 #include "expander.h"
+#include "lexer.h"
 #include "minishell.h"
+#include "parser.h"
 
 static void	cmd_add_back(t_cmd **list, t_cmd *new_cmd)
 {
@@ -77,63 +77,17 @@ t_cmd	*parse_tokens(t_token *tokens, t_shell *shell)
 //  -> expand_tokens
 //  -> parse_tokens
 //  -> shell->cmds
-
-// int	process_input(char *line, t_shell *shell)
+// void print_tokens(t_token *token)
 // {
-// 	if (!line || !shell)
-// 		return (shell->last_status=1, -1);
-// 	if (has_unclosed_quotes(line))
-// 		return (print_syntax_error("minishell: unclosed quotes"), shell->last_status=1, -1);
-// 	if (shell->tokens)
-// 		free_tokens(shell->tokens);
-// 	shell->tokens = lex_input(line, shell);
-// 	if (shell->tokens == NULL)
-// 		return (shell->last_status=1, -1);
-// 	if (syntax_check_tokens(shell->tokens))
-// 		return (free_tokens(shell->tokens), shell->last_status=1, -1);
-// 	if (!expand_tokens(shell->tokens, shell))
-// 		return (free_tokens(shell->tokens), shell->last_status=1, -1);
-// 	if (shell->cmds)
-// 		free_cmds(shell->cmds);
-// 	shell->cmds = parse_tokens(shell->tokens, shell);
-// 	if (!shell->cmds)
-// 		return (shell->last_status=1, -1);
-// 	return (0);
-// }
-void print_tok_type(t_token_type type)
-{
-	if (type == TOK_WORD)
-		printf("TOK_WORD");
-	if (type == TOK_PIPE)
-		printf("TOK_PIPE");
-	if (type == TOK_REDIR_IN)
-		printf("TOK_REDIR_IN");
-	if (type == TOK_REDIR_OUT)
-		printf("TOK_REDIR_OUT");
-	if (type == TOK_APPEND)
-		printf("TOK_APPEND");
-	if (type == TOK_HEREDOC)
-		printf("TOK_HEREDOC");
-}
-void print_tokens(t_token *token)
-{
-	t_token *next;
+// 	t_token *next;
 
-	next = token;
-	while (next)
-	{
-		print_tok_type(next->type);
-		printf(":%s\n", next->value);
-		next = next->next;
-	}
-}
-
-// int error_state_handling(t_shell *shell, int last_status, int ret_v)
-// {
-// 	free_tokens(&(shell->tokens));
-// 	shell->tokens = NULL;
-// 	shell->last_status = last_status;
-// 	return (ret_v);
+// 	next = token;
+// 	while (next)
+// 	{
+// 		print_tok_type(next->type);
+// 		printf(":%s\n", next->value);
+// 		next = next->next;
+// 	}
 // }
 
 int	process_input(char *line, t_shell *shell)
@@ -141,21 +95,21 @@ int	process_input(char *line, t_shell *shell)
 	if (!line || !shell)
 		return (-1);
 	if (has_unclosed_quotes(line))
-		return (print_syntax_error("unclosed quotes"), shell->last_status=-1, -1);
+		return (print_syntax_error("unclosed quotes"), shell->last_status = -1,
+			-1);
 	if (shell->tokens)
 		free_tokens(&(shell->tokens));
 	shell->tokens = lex_input(line, shell);
-	// print_tokens(shell->tokens);
 	if (shell->tokens == NULL)
-		return (shell->last_status=-1, -1);
+		return (shell->last_status = -1, -1);
 	if (syntax_check_tokens(shell->tokens))
-		return (free_tokens(&(shell->tokens)), shell->last_status=-1, -1);
+		return (free_tokens(&(shell->tokens)), shell->last_status = -1, -1);
 	if (!expand_tokens(shell->tokens, shell))
-		return (free_tokens(&(shell->tokens)), shell->last_status=-1, -1);
+		return (free_tokens(&(shell->tokens)), shell->last_status = -1, -1);
 	if (shell->cmds)
 		free_cmds(shell->cmds);
 	shell->cmds = parse_tokens(shell->tokens, shell);
 	if (!shell->cmds)
-		return (free_tokens(&(shell->tokens)), shell->last_status=-1, -1);
+		return (free_tokens(&(shell->tokens)), shell->last_status = -1, -1);
 	return (0);
 }

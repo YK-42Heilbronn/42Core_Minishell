@@ -3,24 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ileongar <ileongar@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/07 17:01:03 by ykonka            #+#    #+#             */
-/*   Updated: 2026/07/16 00:31:10 by ileongar         ###   ########.fr       */
+/*   Updated: 2026/07/17 02:37:48 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-// Build t_cmd objects from tokens,
-// detect syntax errors around pipes and redirections
-// parser output, environment data, and shell state
 
 #ifndef PARSER_H
 # define PARSER_H
 # include "lexer.h"
 # include "libft.h"
+# include <stdbool.h>
 # include <stdio.h>
 # include <stdlib.h>
-# include <stdbool.h>
 
 typedef enum e_redir_type
 {
@@ -69,7 +65,7 @@ typedef struct s_shell
 
 // src/parser/parser_utils.c
 int					has_unclosed_quotes(const char *line);
-// void				free_cmds(t_cmd *cmd);
+int					print_multi_str_error(char *s1, char *s2);
 
 // src/parser/syntax_check.c
 int					is_redir_token(t_token_type type);
@@ -90,6 +86,5 @@ int					cmd_add_arg(t_cmd *cmd, char *word);
 int					parse_redirection(t_cmd *cmd, t_token **tokens);
 t_redir				*new_redir(t_redir_type type, char *file);
 void				cmd_add_redir(t_cmd *cmd, t_redir *redir);
-// void				free_redirs(t_redir *redirs);
 
 #endif

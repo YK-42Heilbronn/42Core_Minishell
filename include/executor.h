@@ -6,11 +6,9 @@
 /*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/07 17:29:48 by ykonka            #+#    #+#             */
-/*   Updated: 2026/07/17 03:35:02 by ykonka           ###   ########.fr       */
+/*   Updated: 2026/07/17 03:40:27 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-//  Apply redirections, setup pipes and run builtins or external commands
 
 #ifndef EXECUTOR_H
 # define EXECUTOR_H

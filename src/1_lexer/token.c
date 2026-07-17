@@ -6,7 +6,7 @@
 /*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/08 13:14:01 by ykonka            #+#    #+#             */
-/*   Updated: 2026/07/16 03:48:23 by ykonka           ###   ########.fr       */
+/*   Updated: 2026/07/17 02:02:06 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,10 @@ void	free_tokens(t_token **list)
 	*list = NULL;
 }
 
-void update_quotes_state(t_token *token)
+void	update_quotes_state(t_token *token)
 {
-	char *v_first;
-	char *v_last;
+	char	*v_first;
+	char	*v_last;
 
 	v_first = token->value;
 	v_last = token->value;

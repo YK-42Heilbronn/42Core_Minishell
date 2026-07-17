@@ -6,22 +6,17 @@
 /*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/07 17:01:17 by ykonka            #+#    #+#             */
-/*   Updated: 2026/07/15 22:12:21 by ykonka           ###   ########.fr       */
+/*   Updated: 2026/07/17 02:50:15 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// Split input into typed tokens, detect quote errors
-#ifndef TOKEN_H
-# define TOKEN_H
-// # include "libs\libft\libft.h"
+#ifndef LEXER_H
+# define LEXER_H
 # include "libft.h"
 # include "stdio.h"
 # include <stdlib.h>
-// # include "minishell.h"
 
 typedef struct s_shell	t_shell;
-
-// Enumeration: [1, 2, 3, 4, 5, 6, 7]
 typedef enum e_token_type
 {
 	TOK_WORD,

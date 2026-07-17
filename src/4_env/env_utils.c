@@ -6,7 +6,7 @@
 /*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/10 16:01:29 by ykonka            #+#    #+#             */
-/*   Updated: 2026/07/16 23:35:15 by ykonka           ###   ########.fr       */
+/*   Updated: 2026/07/17 02:47:49 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,24 +59,38 @@ search the shell env list for the given key
 if the key already exists, replace its value
 if the key does not exist, create a new t_env node and add it to the list
 */
+static int	add_env_value(t_env **env, char *key, char *value)
+{
+	t_env	*new_env;
+	char	*key_dup;
+	char	*value_dup;
+
+	key_dup = ft_strdup(key);
+	value_dup = ft_strdup(value);
+	if (!key_dup || !value_dup)
+		return (free(key_dup), free(value_dup), 0);
+	new_env = env_new_node(key_dup, value_dup);
+	if (!new_env)
+		return (free(key_dup), free(value_dup), 0);
+	env_add_back(env, new_env);
+	return (1);
+}
+
 int	env_set_value(t_env **env, char *key, char *value)
 {
 	t_env	*env_node;
-	t_env	*new_env;
 	char	*value_cpy;
-	char *key_dup;
-	char *value_dup;
 
-	env_node = *env;
 	if (!env || !*env || !key || !value)
 		return (0);
+	env_node = *env;
 	while (env_node)
 	{
 		if (env_node->key && ft_strlen(env_node->key) == ft_strlen(key)
 			&& ft_strncmp(env_node->key, key, ft_strlen(key) + 1) == 0)
 		{
 			value_cpy = ft_strdup(value);
-			if (value_cpy == NULL)
+			if (!value_cpy)
 				return (0);
 			free(env_node->value);
 			env_node->value = value_cpy;
@@ -84,15 +98,7 @@ int	env_set_value(t_env **env, char *key, char *value)
 		}
 		env_node = env_node->next;
 	}
-	key_dup = ft_strdup(key);
-	value_dup = ft_strdup(value);
-	if (!key_dup || !value_dup)
-		return (free(key_dup), free(value_dup), 0);
-	new_env = env_new_node(key_dup, value_dup);
-	if (new_env == NULL)
-		return (free(key_dup), free(value_dup), 0);
-	env_add_back(env, new_env);
-	return (1);
+	return (add_env_value(env, key, value));
 }
 
 /*
@@ -101,33 +107,6 @@ search the env list for the given key
 unlink that node from the linked list
 free its key, value, and the node itself
 */
-// int		env_unset_value(t_env **env, const char *key)
-// {
-// 	t_env *env_node;
-// 	t_env *prev_node;
-
-// 	if (!env || !*env || !key)
-// 		return (0);
-// 	env_node = *env;
-// 	prev_node = NULL;
-// 	while (env_node)
-// 	{
-// 		if (env_node->key
-// 			&& ft_strlen(env_node->key) == ft_strlen(key)
-// 			&& ft_strncmp(env_node->key, key, ft_strlen(key)+1) == 0)
-// 		{
-// 			prev_node->next = env_node->next;
-// 			free(env_node->key);
-// 			free(env_node->value);
-// 			free(env_node);
-// 			return(1);
-// 		}
-// 		prev_node = env_node;
-// 		env_node = env_node->next;
-// 	}
-// 	return (0);
-// }
-
 int	env_unset_value(t_env **env, char *key)
 {
 	t_env	*cur;

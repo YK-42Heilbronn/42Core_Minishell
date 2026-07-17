@@ -6,12 +6,12 @@
 /*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/09 16:56:39 by ykonka            #+#    #+#             */
-/*   Updated: 2026/07/16 22:56:55 by ykonka           ###   ########.fr       */
+/*   Updated: 2026/07/17 02:18:08 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
 #include "lexer.h"
+#include "parser.h"
 #include <stdlib.h>
 
 t_redir	*new_redir(t_redir_type type, char *file)
@@ -47,19 +47,6 @@ void	cmd_add_redir(t_cmd *cmd, t_redir *redir)
 		last = last->next;
 	last->next = redir;
 }
-
-// void free_redirs(t_redir *redirs)
-// {
-// 	t_redir	*tmp;
-
-// 	while (redirs)
-// 	{
-// 		tmp = redirs;
-// 		redirs = redirs->next;
-// 		free(tmp->file);
-// 		free(tmp);
-// 	}
-// }
 
 static t_redir_type	get_redir_type(t_token_type type)
 {

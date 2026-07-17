@@ -6,44 +6,11 @@
 /*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/10 16:02:48 by ykonka            #+#    #+#             */
-/*   Updated: 2026/07/15 02:45:07 by ykonka           ###   ########.fr       */
+/*   Updated: 2026/07/17 02:31:06 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expander.h"
-
-/*
-Behavior::
-If token == NULL,
-	return (0 or 1 depending on your style); I recommend 0 only for real failure and 1 for no-op success.
-If token->type != TOK_WORD, do nothing and return 1.
-If token is TOK_WORD, call:
-C::
-new_value = expand_word(token->value, shell,
-	token->quoted_single, token->quoted_double);
-Free old token->value
-Replace with new_value
-Return 1 on success, 0 on failure
-*/
-// int	expand_one_token(t_token *token, t_shell *shell)
-// {
-// 	char *new_tok_value;
-
-// 	if (token == NULL)
-// 		return (1);
-// 	if (token->type != TOK_WORD)
-// 		return (1); // success
-// 	else
-// 	{
-// 		new_tok_value = expand_word(token->value, shell, token->quoted_single,
-				// token->quoted_double);
-// 		if (new_tok_value == NULL)
-// 			return (0); // failure
-// 		free(token->value);
-// 		token->value = new_tok_value;
-// 		return (1); // success
-// 	}
-// }
 
 int	expand_one_token(t_token *token, t_shell *shell)
 {
@@ -81,9 +48,8 @@ int	expand_tokens(t_token *tokens, t_shell *shell)
 	while (tokens)
 	{
 		if (!expand_one_token(tokens, shell))
-			return (0); // failure
-		// printf("va:%s\n", tokens->value);
+			return (0);
 		tokens = tokens->next;
 	}
-	return (1); // success
+	return (1);
 }
