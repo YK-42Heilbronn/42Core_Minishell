@@ -6,7 +6,7 @@
 /*   By: ykonka <ykonka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 09:54:53 by ykonka            #+#    #+#             */
-/*   Updated: 2026/02/09 13:25:37 by ykonka           ###   ########.fr       */
+/*   Updated: 2026/07/17 03:44:34 by ykonka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,8 @@ char	**extract_substrings(char **str_arr, char *old_str, char c)
 	new_str = ft_strchr(old_str, c);
 	while (new_str)
 	{
-		*str_arr = ft_substr(old_str, 0, \
-			ft_strlen(old_str) - ft_strlen(new_str));
+		*str_arr = ft_substr(old_str, 0, ft_strlen(old_str)
+				- ft_strlen(new_str));
 		if (*str_arr == NULL)
 			return (free_double_arr_str(str_arr), NULL);
 		while (1)
