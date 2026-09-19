@@ -98,10 +98,10 @@ minishell$ exit 0
 
 ## Resources
 - `Concept Research`: following resources are used to understand the core concept of the shell and its working principles
-	- (gnu manual)[https://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html]
-    - (shell wiki)[https://en.wikipedia.org/wiki/Shell_(computing)]
+	- [gnu manual](https://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html)
+    - [shell wiki](https://en.wikipedia.org/wiki/Shell_(computing))
 - `AI usage`: AI is used for research, test case generation and code refactorization.
-	- (perplexity)[www.perplexity.com]
-	- (chatgpt)[www.chatgpt.com]
-	- (claude)[www.claude.com]
+	- [perplexity](www.perplexity.com)
+	- [chatgpt](www.chatgpt.com)
+	- [claude](www.claude.com)
 
